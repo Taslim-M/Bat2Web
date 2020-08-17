@@ -26,3 +26,4 @@ hs_err_pid*
 /data/
 /templates/models
 /AI4Good/SMOTE/models
+/AI4Good/Bat_Detective/models
