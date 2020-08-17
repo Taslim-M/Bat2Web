@@ -25,3 +25,4 @@ hs_err_pid*
 #specific folders
 /data/
 /templates/models
+/AI4Good/SMOTE/models
