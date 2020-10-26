@@ -47,6 +47,7 @@ for file_name in file_paths:
 	img_path =os.path.join(image_folder_path, file_name)
 	img = image.load_img(img_path, target_size=(112,170))
 	x = image.img_to_array(img)
+	x = x / 255
 	x = np.expand_dims(x, axis=0)
 	x = tf.constant(x)
 	Y_actual.append(getSpeciesCode(file_name))
