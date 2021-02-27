@@ -2,25 +2,106 @@
     <title>Bat Locations</title>
     <script>
         let map;
-  
+
         function initMap() {
-          map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat:  25.3026511, lng: 55.4818249 },
-            zoom: 10,
-          });
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 25.3026511, lng: 55.4818249 },
+                zoom: 10,
+            });
         }
-      </script>
+    </script>
     </head>
 
     <body>
-        <h1>Hello, world!</h1>
-        <%for(const inc of incidents){ %>
-            <%= inc %>
-                <% } %>
-        <div id="map"></div>
-        <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-        <script
+        <!-- Navigation -->
+        <%- include("partials/nav") %>
+            <div class="container">
+                <h1>Hello, world!</h1>
+                <form method="GET" action="/filter">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="species_name">Species Name</label>
+                            <select name="species_name" id="species_name" class="form-control">
+                                <option value="All">All</option>
+                                <option>Rhinopoma muscatellum</option>
+                                <option>Taphozous perforatus</option>
+                                <option>Pipistrellus kuhli</option>
+                                <option>Rhyneptesicus nasutus</option>
+                                <option>Eptesicus bottae</option>
+                                <option>Rousettus aegyptius</option>
+                                <option>Myotis emarginatus</option>
+                                <option>Asellia tridens</option>
+                              </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="city">City</label>
+                            <select name="city" id="city" class="form-control">
+                                <option value="All">All</option>
+                                <option>Dubai</option>
+                                <option>Sharjah</option>
+                                <option>Ras Al Khaimah</option>
+                              </select>
+                        </div>
+                     
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="from_date">From Date</label>
+                            <input type="date" id="from_date" name="from_date">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="to_date">To Date</label>
+                            <input type="date" id="to_date" name="to_date">
+                        </div>
+                     
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Address</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress2">Address 2</label>
+                        <input type="text" class="form-control" id="inputAddress2"
+                            placeholder="Apartment, studio, or floor">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">City</label>
+                            <input type="text" class="form-control" id="inputCity">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">State</label>
+                            <select id="inputState" class="form-control">
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputZip">Zip</label>
+                            <input type="text" class="form-control" id="inputZip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                            <label class="form-check-label" for="gridCheck">
+                                Check me out
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
+                <%for(const inc of incidents){ %>
+                    <%= inc %>
+                        <% } %>
+
+
+            </div>
+            <div id="map"></div>
+            <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+
+            <script src="javascript/index.js"></script>
+            <script
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA__C1hnT5apk-I5uYcqgDb5yWRMqkR-ko&callback=initMap&libraries=&v=weekly"
-                async
-        ></script>
-<%- include("partials/footer") %>
+                async></script>
+            <%- include("partials/footer") %>
