@@ -16,7 +16,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 
 app.get("/", async function (req, res) {
-    const incidents = await Incident.find({});
+    const incidents = await Incident.find({}).limit(10);
     res.render("index",{incidents: incidents} );
 });
 
