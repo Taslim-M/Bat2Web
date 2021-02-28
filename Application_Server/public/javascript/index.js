@@ -7,26 +7,44 @@ function initMap() {
         zoom: 8,
     });
 
-    const marker = new google.maps.Marker({
-        position: { lat: 25.30265, lng: 55.48183 },
-        map: map,
-    });
+    clearAllMarkers();
+    console.log(parsed_incidents[0].bat_species);
+    console.log(parsed_incidents[0].latitude);
 
-    const contentString =
-        '<div id="content">' +
-            '<h3 id="firstHeading" class="firstHeading">'+parsed_incidents[0].bat_species+'</h3>' +
-                '<div id="bodyContent">' +
-                '<b>Time: </b>' + parsed_incidents[0].time + 
-                '</br><b>Latitude: </b>' + parsed_incidents[0].latitude + 
-                '</br><b>Longitude: </b>' + parsed_incidents[0].longitude + 
-                "</div>" +
-        "</div>";
+    for (var incid of parsed_incidents){
+        console.log(incid.latitude);
 
-    const infowindow = new google.maps.InfoWindow({
-        content: contentString,
-    });
-    marker.addListener("click", () => {
-        infowindow.open(map, marker);
-    });
+        const marker = new google.maps.Marker({
+            position: { lat: incid.latitude, lng: incid.longitude },
+            map: map,
+        });
+    
+        const contentString =
+            '<div id="content">' +
+                '<h3 id="firstHeading" class="firstHeading">'+ incid.bat_species+'</h3>' +
+                    '<div id="bodyContent">' +
+                    '<b>Time: </b>' + incid.time + 
+                    '</br><b>Latitude: </b>' + incid.latitude + 
+                    '</br><b>Longitude: </b>' + incid.longitude + 
+                    "</div>" +
+            "</div>";
+    
+        const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+        });
+        marker.addListener("click", () => {
+            infowindow.open(map, marker);
+        });
 
+        allMarkers.push(marker);
+    
+    }
+
+}
+
+function clearAllMarkers(){
+    for (var mk in allMarkers) {
+        mk.setMap(null);
+    }
+    allMarkers = [];
 }
