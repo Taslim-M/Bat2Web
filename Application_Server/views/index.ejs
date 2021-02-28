@@ -1,6 +1,6 @@
 <%- include("partials/header") %>
     <title>Bat Locations</title>
-    <script>
+    <!-- <script>
         let map;
 
         function initMap() {
@@ -9,6 +9,9 @@
                 zoom: 10,
             });
         }
+    </script> -->
+    <script>
+        var parsed_incidents = <%-JSON.stringify(incidents)%>;
     </script>
     </head>
 
@@ -93,6 +96,7 @@
                 </form>
                 <%for(const inc of incidents){ %>
                     <%= inc %>
+                </br>
                         <% } %>
 
 
