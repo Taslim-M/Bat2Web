@@ -36,7 +36,10 @@
                                 <option>Asellia tridens</option>
                               </select>
                         </div>
-              
+                        <div class="form-group col-md-6">
+                            <label for="num_detections">Limit Search Results</label>
+                            <input type="number" class="form-control" id="num_detections" name="num_detections" value="15">
+                            </div>
                      
                     </div>
                     <div class="form-row">
@@ -49,12 +52,7 @@
                             <input type="date" id="to_date" name="to_date">
                         </div>
                     </div>    
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="num_detections">Limit: </label>
-                            <input type="number" id="num_detections" name="num_detections" value="15">
-                        </div>
-                    </div>    
+              
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
                 <hr>
