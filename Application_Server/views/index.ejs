@@ -67,14 +67,33 @@
                         <option>Ras Al Khaimah</option>
                       </select>
                 </div>
-                <%for(const inc of incidents){ %>
-                    <%= inc %>
-                </br>
-                        <% } %>
 
-
+                        <button type="button" class="btn btn-outline-primary" id="toggleMapTable">Show Table</button>
             </div>
             <div id="map" class="container"></div>
+            <div class="container" id="table">
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Species Name</th>
+                        <th scope="col">Time of Detection</th>
+                        <th scope="col">Latitude, Longitude</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <%var count =0; for(const inc of incidents){ %>
+                      <tr>
+                        <th scope="row"><%= count+1 %></th>
+                        <td><%=inc.bat_species%></td>
+                        <td><%=inc.time%></td>
+                        <td><%=inc.latitude%>,<%=inc.longitude%></td>
+                        <% count++ %>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+            </div>
             <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
             <!-- AIzaSyA4GafQMEhy5nOAgAlK9cHQH6bk5yEah-A -->
             <!-- ad key  -->

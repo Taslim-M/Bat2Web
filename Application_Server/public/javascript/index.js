@@ -1,3 +1,17 @@
+$("table").hide();
+
+$("#toggleMapTable").on('click',function(){
+    if($("#toggleMapTable").html()=="Show Table"){
+        $("#toggleMapTable").html("Show Map");
+        $("#map").hide();
+        $("table").show();
+    }else{
+        $("#toggleMapTable").html("Show Table");
+        $("#map").show();
+        $("table").hide();
+    }
+});
+
 let map;
 var allMarkers = [];
 var heatmap;
