@@ -84,7 +84,7 @@
                       <tr>
                         <th scope="row"><%= count+1 %></th>
                         <td><%=inc.bat_species%></td>
-                        <td><%=inc.time%></td>
+                        <td><% var date = new Date(inc.time); %> <%=date.toGMTString();  %> </td>
                         <td><%=inc.latitude%>,<%=inc.longitude%></td>
                         <% count++ %>
                       </tr>
