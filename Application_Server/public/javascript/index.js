@@ -34,7 +34,7 @@ function initMap() {
   //------heatmap-------------------
   const heatmapControlDiv = document.createElement("div");
   heatmapControl(heatmapControlDiv, map);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(heatmapControlDiv);
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(heatmapControlDiv);
 
   //------------------------------------
   showMarkers();
