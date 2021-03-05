@@ -17,7 +17,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 
 app.get("/", async function (req, res) {
-    const incidents = await Incident.find({}).limit(10);
+    const incidents = await Incident.find({}).sort({time:'desc'}).limit(10);
     res.render("index", { incidents: incidents });
 });
 
@@ -45,7 +45,7 @@ app.get("/filter", async function (req, res) {
                 $gte: from_date,
                 $lt: to_date
             }
-        }).limit(num_detections);
+        }).sort({time:'desc'}).limit(num_detections);
         res.render("index", { incidents: incidents });
     } else {
         const incidents = await Incident.find({
@@ -54,11 +54,13 @@ app.get("/filter", async function (req, res) {
                 $gte: from_date,
                 $lt: to_date
             }
-        }).limit(num_detections);
+        }).sort({time:'desc'}).limit(num_detections);
         res.render("index", { incidents: incidents });
     }
 });
-
+app.get("/about-us", async function (req, res) {
+    res.render("about-us")
+});
 
 // custom 404 page 
 app.use(function (req, res) {
