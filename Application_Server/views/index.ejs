@@ -1,15 +1,7 @@
 <%- include("partials/header") %>
     <title>Bat Locations</title>
-    <!-- <script>
-        let map;
 
-        function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 25.3026511, lng: 55.4818249 },
-                zoom: 10,
-            });
-        }
-    </script> -->
+
     <script>
         var parsed_incidents = <%-JSON.stringify(incidents)%>;
     </script>
@@ -28,21 +20,20 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="species_name">Species Name</label>
-                            <select name="species_name" id="species_name" class="form-control">
-                                <option value="All">All</option>
-                                <option>Rhinopoma muscatellum</option>
-                                <option>Taphozous perforatus</option>
-                                <option>Pipistrellus kuhli</option>
-                                <option>Rhyneptesicus nasutus</option>
-                                <option>Eptesicus bottae</option>
-                                <option>Rousettus aegyptius</option>
-                                <option>Myotis emarginatus</option>
-                                <option>Asellia tridens</option>
+                            <select multiple name="species_name" id="species_name" class="selectpicker form-control">
+                                <option selected>Rhinopoma muscatellum</option>
+                                <option selected>Taphozous perforatus</option>
+                                <option selected>Pipistrellus kuhli</option>
+                                <option selected>Rhyneptesicus nasutus</option>
+                                <option selected>Eptesicus bottae</option>
+                                <option selected>Rousettus aegyptius</option>
+                                <option selected>Myotis emarginatus</option>
+                                <option selected>Asellia tridens</option>
                               </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="num_detections">Limit Search Results</label>
-                            <input type="number" class="form-control" id="num_detections" name="num_detections" value="15">
+                            <input type="number" class="form-control" id="num_detections" name="num_detections" value="30">
                             </div>
                      
                     </div>
@@ -104,7 +95,11 @@
             <!-- Taslim key  -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script src="javascript/index.js"></script>
+
+
             <script
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4GafQMEhy5nOAgAlK9cHQH6bk5yEah-A&callback=initMap&libraries=visualization&v=weekly"
                 async></script>
+
+
             <%- include("partials/footer") %>
