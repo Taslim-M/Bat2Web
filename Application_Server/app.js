@@ -19,7 +19,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 
 app.get("/", async function (req, res) {
-  const incidents = await Incident.find({}).sort({ time: "desc" }).limit(10);
+  const incidents = await Incident.find({}).sort({ time: "desc" }).limit(30);
   res.render("index", { incidents: incidents });
 });
 
