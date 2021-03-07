@@ -60,9 +60,10 @@ app.get("/filter", async function (req, res) {
     })
       .sort({ time: "desc" })
       .limit(num_detections);
-    res.render("index", { incidents: incidents });
-  }
-});
+    msg="Showing "+incidents.length+" results for "+sp_name+" from "+from_date.toDateString()+" to "+to_date.toDateString();
+    res.render("index", { incidents: incidents, msg: msg });
+
+  });
 app.get("/about-us", async function (req, res) {
   res.render("about-us");
 });
