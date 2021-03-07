@@ -109,6 +109,18 @@ function showMarkers() {
 
     allMarkers.push(marker);
   }
+
+  const legend = document.getElementById("legend");
+
+  for (const key in markerColorCode) {
+    const color=markerColorCode[key];
+    const shortenedName = key=='Other' ? 'Other' : key[0] + '. ' + key.split(' ').slice(-1)[0]
+    const div = document.createElement("div");
+    div.innerHTML = '<b style="color:'+color+'">'+shortenedName+'</b>';
+    legend.appendChild(div);
+  }
+  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+
 }
 
 function getHeatmapData() {

@@ -1,105 +1,117 @@
 <%- include("partials/header") %>
-    <title>Bat Locations</title>
+  <title>Bat Locations</title>
 
 
-    <script>
-        var parsed_incidents = <%-JSON.stringify(incidents)%>;
-    </script>
-    </head>
+  <script>
+    var parsed_incidents= <%- JSON.stringify(incidents)%>;
+  </script>
+  </head>
 
-    <body>
-        <!-- Navigation -->
-        <%- include("partials/nav") %>
-            <div class="container">
-                <div class="jumbotron">
-                    <h1 class="display-4">Detection Tracker</h1>
-                    <p class="lead">Filter bat species detection according to your requirements.</p>
+  <body>
+    <!-- Navigation -->
+    <%- include("partials/nav") %>
+      <div class="container">
+        <div class="jumbotron">
+          <h1 class="display-4">Detection Tracker</h1>
+          <p class="lead">Filter bat species detection according to your requirements.</p>
 
-                  </div>
-                <form method="GET" action="/filter">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="species_name">Species Name</label>
-                            <select multiple name="species_name" id="species_name" class="selectpicker form-control">
-                                <option selected>Rhinopoma muscatellum</option>
-                                <option selected>Taphozous perforatus</option>
-                                <option selected>Pipistrellus kuhli</option>
-                                <option selected>Rhyneptesicus nasutus</option>
-                                <option selected>Eptesicus bottae</option>
-                                <option selected>Rousettus aegyptius</option>
-                                <option selected>Myotis emarginatus</option>
-                                <option selected>Asellia tridens</option>
-                              </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="num_detections">Limit Search Results</label>
-                            <input type="number" class="form-control" id="num_detections" name="num_detections" value="30">
-                            </div>
-                     
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="from_date">From Date</label>
-                            <input type="date" id="from_date" name="from_date">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="to_date">To Date</label>
-                            <input type="date" id="to_date" name="to_date">
-                        </div>
-                    </div>    
-              
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                </form>
-                <hr>
-                <div class="form-group col-md-6">
-                    <label for="city">Highlight City</label>
-                    <select name="city" id="city" class="form-control">
-                        <option>None</option>
-                        <option>Dubai</option>
-                        <option>Sharjah</option>
-                        <option>Ras Al Khaimah</option>
-                        <option>Umm Al Quwain</option>
-                      </select>
-                </div>
-
-                        <button type="button" class="btn btn-outline-primary" id="toggleMapTable">Show Table</button>
+        </div>
+        <form method="GET" action="/filter">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="species_name">Species Name</label>
+              <select multiple name="species_name" id="species_name" class="selectpicker form-control">
+                <option selected>Rhinopoma muscatellum</option>
+                <option selected>Taphozous perforatus</option>
+                <option selected>Pipistrellus kuhli</option>
+                <option selected>Rhyneptesicus nasutus</option>
+                <option selected>Eptesicus bottae</option>
+                <option selected>Rousettus aegyptius</option>
+                <option selected>Myotis emarginatus</option>
+                <option selected>Asellia tridens</option>
+              </select>
             </div>
-            <div id="map" class="container"></div>
-            <div class="container" id="table">
-                <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Species Name</th>
-                        <th scope="col">Time of Detection</th>
-                        <th scope="col">Latitude, Longitude</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <%var count =0; for(const inc of incidents){ %>
-                      <tr>
-                        <th scope="row"><%= count+1 %></th>
-                        <td><%=inc.bat_species%></td>
-                        <td><% var date = new Date(inc.time); %> <%=date.toGMTString();  %> </td>
-                        <td><%=inc.latitude%>,<%=inc.longitude%></td>
-                        <% count++ %>
-                      </tr>
-                      <% } %>
-                    </tbody>
-                  </table>
+            <div class="form-group col-md-6">
+              <label for="num_detections">Limit Search Results</label>
+              <input type="number" class="form-control" id="num_detections" name="num_detections" value="30">
             </div>
-            <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-            <!-- AIzaSyA4GafQMEhy5nOAgAlK9cHQH6bk5yEah-A -->
-            <!-- ad key  -->
-            <!-- AIzaSyA__C1hnT5apk-I5uYcqgDb5yWRMqkR-ko --> 
-            <!-- Taslim key  -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="javascript/index.js"></script>
+
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="from_date">From Date</label>
+              <input type="date" id="from_date" name="from_date">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="to_date">To Date</label>
+              <input type="date" id="to_date" name="to_date">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+        <hr>
+        <div class="form-group col-md-6">
+          <label for="city">Highlight City</label>
+          <select name="city" id="city" class="form-control">
+            <option>None</option>
+            <option>Dubai</option>
+            <option>Sharjah</option>
+            <option>Ras Al Khaimah</option>
+            <option>Umm Al Quwain</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn btn-outline-primary" id="toggleMapTable">Show Table</button>
+      </div>
+      <div id="map" class="container"></div>
+      <div id="legend">
+        <h5>Legend</h5>
+      </div>
+      <div class="container" id="table">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Species Name</th>
+              <th scope="col">Time of Detection</th>
+              <th scope="col">Latitude, Longitude</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%var count=0; for(const inc of incidents){ %>
+              <tr>
+                <th scope="row">
+                  <%= count+1 %>
+                </th>
+                <td>
+                  <%=inc.bat_species%>
+                </td>
+                <td>
+                  <% var date=new Date(inc.time); %>
+                    <%=date.toGMTString(); %>
+                </td>
+                <td>
+                  <%=inc.latitude%>,<%=inc.longitude%>
+                </td>
+                <% count++ %>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+      </div>
+      <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+      <!-- AIzaSyA4GafQMEhy5nOAgAlK9cHQH6bk5yEah-A -->
+      <!-- ad key  -->
+      <!-- AIzaSyA__C1hnT5apk-I5uYcqgDb5yWRMqkR-ko -->
+      <!-- Taslim key  -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="javascript/index.js"></script>
 
 
-            <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4GafQMEhy5nOAgAlK9cHQH6bk5yEah-A&callback=initMap&libraries=visualization&v=weekly"
-                async></script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4GafQMEhy5nOAgAlK9cHQH6bk5yEah-A&callback=initMap&libraries=visualization&v=weekly"
+        async></script>
 
 
-            <%- include("partials/footer") %>
+      <%- include("partials/footer") %>
