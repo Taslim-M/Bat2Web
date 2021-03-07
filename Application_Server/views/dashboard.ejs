@@ -1,0 +1,280 @@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BatDetect | Dashboard</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/adminlte.min.css">
+    <!-- css -->
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <!-- plotly  -->
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+</head>
+
+<title>BatDetect | Dashboard</title>
+
+<body>
+    <!-- Navigation -->
+    <%- include("partials/nav") %>
+        <div>
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0"><b>Statistics Dashboard</b></h1>
+                        </div>
+                    </div>
+                    <!-- /.container-fluid -->
+                </div>
+            </div>
+
+            <!-- main content -->
+            <div>
+                <!-- row 1 -->
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <section class="col-lg-6 connectedSortable">
+                        <div class="row container-fluid">
+                            <div class="col-sm">
+                                <!-- small box -->
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3>150</h3>
+                                        <p>Total Detections</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-search"></i>
+                                    </div>
+
+
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-sm">
+                                <!-- small box -->
+                                <div class="small-box bg-success">
+                                    <div class="inner">
+                                        <h3>
+                                            53
+                                            <sup style="font-size: 20px">%</sup>
+                                        </h3>
+                                        <p>Different Bat Species</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-pie-graph"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">
+
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- row 2 col 1,2 -->
+                        <div class="row container-fluid">
+                            <div class="col-sm">
+                                <!-- small box -->
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3>44</h3>
+                                        <!-- date city and species  -->
+                                        <p>Most Recent Detection</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-clock"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">
+
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-sm">
+                                <!-- small box -->
+                                <div class="small-box bg-danger">
+                                    <div class="inner">
+                                        <h3>65</h3>
+                                        <p>Bat Detection Sites</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-location"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">
+
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ./row 1,2 col2 -->
+                    <section class="col-lg-6 connectedSortable">
+                        <div class="card detectedSpeciesCard">
+                            <div class="card-header">
+                                <h3 class="card-title">Detected Species</h3>
+                                <div class="card-tools ">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0 detectedSpeciesList">
+                                <ul class="products-list product-list-in-card pl-2 pr-2 ">
+                                    <!-- /.item -->
+                                    <li class="item">
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                Asselia Tridens
+                                        </div>
+                                    </li>
+                                    <!-- /.item -->
+                                    <li class="item">
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                Eptesicus Bottae
+                                        </div>
+                                    </li>
+                                    <!-- /.item -->
+                                    <li class="item">
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                Myotis Emarginatus
+                                        </div>
+                                    </li>
+                                    <!-- /.item -->
+                                    <li class="item">
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                Pipistrellus kuhli
+                                        </div>
+                                    </li>
+                                    <!-- /.item -->
+                                    <li class="item">
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                Rhinopoma muscatellum
+                                        </div>
+                                    </li>
+                                    <!-- /.item -->
+                                    <li class="item">
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                Rhyneptesicus nasutus
+                                        </div>
+                                    </li>
+                                    <!-- /.item -->
+                                    <li class="item">
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                Rousettus aegyptius
+                                        </div>
+                                    </li>
+                                    <!-- /.item -->
+                                    <li class="item">
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                Taphozous perforatus
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.card-body -->
+                    </section>
+                    <!-- ./col -->
+                </div>
+
+            </div>
+            <!-- row  2 -->
+            <div class="row container-fluid">
+
+                <section class="col-lg-4 connectedSortable">
+                    <div class="card card-dark h-100">
+                        <div class="card-header">
+                            <h3 class="card-title">Detection By Species</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <div id="pieChart">
+
+                            </div>
+                            <!-- /.card-body -->
+
+
+                        </div>
+                </section>
+                <section class="col-lg-8 connectedSortable">
+                    <!-- bar chart -->
+                    <div class="card card-dark h-100">
+                        <div class="card-header">
+                            <h3 class="card-title">Detections over time</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body ">
+                            <div id='barChart'>
+                                <!-- Plotly bar chart will be drawn inside this DIV -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <br>
+            <!-- row 3 -->
+            <div class="container-fluid">
+                <div class="card card-purple">
+
+                    <div class=" card-header">
+                        <h3 class="card-title">Detection per Species over Time</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="background-color: rgb(245, 231, 250);">
+                    <div id="timeSeriesChart">
+
+                        <!-- Plotly time series chart will be drawn inside this DIV -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="javascript/dashboard.js"></script>
+        <%- include("partials/footer") %>
+</body>

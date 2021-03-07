@@ -1,0 +1,6 @@
+.detectedSpeciesCard {
+  max-height: 300px;
+}
+.detectedSpeciesList {
+  overflow: scroll;
+}
