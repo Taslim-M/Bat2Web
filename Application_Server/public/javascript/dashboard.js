@@ -1,4 +1,4 @@
-var allLabels = [
+var allLabels=[
   "A.Tridens",
   "E. Bottae",
   "M. Emarginatus",
@@ -10,21 +10,21 @@ var allLabels = [
 ];
 // ----------------bar chart--------------
 
-var trace1 = {
+var trace1={
   x: [1, 2, 3, 4],
   y: [1, 4, 9, 16],
   name: "A.Tridens",
   type: "bar",
   marker: { color: "#a8e6cf " },
 };
-var trace2 = {
+var trace2={
   x: [1, 2, 3, 4],
   y: [6, 8, 4.5, 8],
   name: "E. Bottae",
   type: "bar",
   marker: { color: "#a3bded" },
 };
-var trace3 = {
+var trace3={
   x: [1, 2, 3, 4],
   y: [15, 3, 4.5, 8],
   name: "P. kuhli",
@@ -32,28 +32,28 @@ var trace3 = {
   marker: { color: " #e4dcf1" },
 };
 
-var trace4 = {
+var trace4={
   x: [1, 2, 3, 4],
   y: [1, 3, 3, 4],
   name: "R. muscatellum",
   type: "bar",
   marker: { color: "#ff8b94" },
 };
-var trace5 = {
+var trace5={
   x: [1, 2, 3, 4],
   y: [1, 4, 9, 16],
   name: "R. aegyptius",
   type: "bar",
   marker: { color: "#ffaaa5" },
 };
-var trace6 = {
+var trace6={
   x: [1, 2, 3, 4],
   y: [6, 8, 4.5, 8],
   name: "T. perforatus",
   type: "bar",
   marker: { color: "#ffd3b6" },
 };
-var trace7 = {
+var trace7={
   x: [1, 2, 3, 4],
   y: [15, 3, 4.5, 8],
   name: "R. nasutus",
@@ -61,7 +61,7 @@ var trace7 = {
   marker: { color: "#dcedc1" },
 };
 
-var trace8 = {
+var trace8={
   x: [1, 2, 3, 4],
   y: [1, 3, 3, 4],
   name: "M. Emarginatus",
@@ -69,8 +69,8 @@ var trace8 = {
   marker: { color: "#cbdadb" },
 };
 
-var data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8];
-var layout = {
+var data=[trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8];
+var layout={
   xaxis: { title: "X axis" },
   yaxis: { title: "Y axis" },
   barmode: "relative",
@@ -78,14 +78,14 @@ var layout = {
   fontsize: 18,
   marker: { color: "#2f4b7c" },
 };
-var config = { responsive: true };
+var config={ responsive: true };
 
 Plotly.newPlot("barChart", data, layout, config);
 // --------------Pie chart-------------------
 
-var allValues = [31, 24, 19, 18, 8, 31, 24, 19, 18, 8];
+var allValues=[31, 24, 19, 18, 8, 31, 24, 19, 18, 8];
 
-var ultimateColors = [
+var ultimateColors=[
   "#003f5c",
   "#2f4b7c",
   "#665191",
@@ -96,10 +96,10 @@ var ultimateColors = [
   "#ffa600",
 ];
 
-var data = [
+var data=[
   {
-    values: allValues,
-    labels: allLabels,
+    values: parsed_pie_counts.map(x => x.count),
+    labels: parsed_pie_counts.map(x => x._id[0]+'. '+x._id.split(' ')[1]),
     type: "pie",
     marker: {
       colors: ultimateColors,
@@ -115,7 +115,7 @@ var data = [
   },
 ];
 
-var layout = {
+var layout={
   margin: { t: 0, b: 0, l: 0, r: 0 },
   showlegend: false,
   fontsize: 18,
@@ -133,7 +133,7 @@ Plotly.d3.csv(
       });
     }
 
-    var trace1 = {
+    var trace1={
       type: "scatter",
       mode: "lines",
       name: "AAPL High",
@@ -142,7 +142,7 @@ Plotly.d3.csv(
       line: { color: "#17BECF" },
     };
 
-    var trace2 = {
+    var trace2={
       type: "scatter",
       mode: "lines",
       name: "AAPL Low",
@@ -151,9 +151,9 @@ Plotly.d3.csv(
       line: { color: "#7F7F7F" },
     };
 
-    var data = [trace1, trace2];
+    var data=[trace1, trace2];
 
-    var layout = {
+    var layout={
       // title: "Time Series with Rangeslider",
       xaxis: {
         autorange: true,
