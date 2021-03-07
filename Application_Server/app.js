@@ -17,7 +17,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 
 app.get("/", async function (req, res) {
-    const incidents = await Incident.find({}).sort({time:'desc'}).limit(10);
+    const incidents = await Incident.find({}).sort({ time: 'desc' }).limit(10);
     res.render("index", { incidents: incidents });
 });
 
@@ -25,7 +25,7 @@ app.get("/filter", async function (req, res) {
     let sp_name = req.query.species_name;
     let from_date_str = req.query.from_date;
     let to_date_str = req.query.to_date;
-    let num_detections = req.query.num_detections != '' ?  parseInt(req.query.num_detections) : 15;
+    let num_detections = req.query.num_detections != '' ? parseInt(req.query.num_detections) : 15;
 
     var from_date = new Date(2020, 02, 23); //oldest possible date
     var to_date = Date.now();
@@ -39,24 +39,15 @@ app.get("/filter", async function (req, res) {
     console.log(from_date);
     console.log(to_date);
 
-    if (sp_name == "All") {
-        const incidents = await Incident.find({
-            time: {
-                $gte: from_date,
-                $lt: to_date
-            }
-        }).sort({time:'desc'}).limit(num_detections);
-        res.render("index", { incidents: incidents });
-    } else {
-        const incidents = await Incident.find({
-            bat_species: sp_name,
-            time: {
-                $gte: from_date,
-                $lt: to_date
-            }
-        }).sort({time:'desc'}).limit(num_detections);
-        res.render("index", { incidents: incidents });
-    }
+    const incidents = await Incident.find({
+        bat_species: sp_name,
+        time: {
+            $gte: from_date,
+            $lt: to_date
+        }
+    }).sort({ time: 'desc' }).limit(num_detections);
+    res.render("index", { incidents: incidents });
+
 });
 app.get("/about-us", async function (req, res) {
     res.render("about-us")
