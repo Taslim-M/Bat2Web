@@ -75,20 +75,34 @@ app.get("/dashboard", async function (req, res) {
 
   // --------------- PIE CHART DATA  ^ 
 
-
   // Bar chart data
-  let bar_counts = await Incident.aggregate([
+  let counts_by_species_and_month = await Incident.aggregate([
     {
+
       $group: {
-        _id:{"$month": '$time'},
+        _id: { month: { '$month': "$time" }, bat_species: '$bat_species' },
         count: { $sum: 1 }
       }
     }
   ]);
-  bar_counts.sort((a,b) => a._id - b._id);
+  
+  bar_counts = {
 
+    "Rhinopoma muscatellum": { counts: new Array(12).fill(0) },
+    "Myotis emarginatus": { counts: new Array(12).fill(0) },
+    "Pipistrellus kuhli": { counts: new Array(12).fill(0) },
+    "Asellia tridens": { counts: new Array(12).fill(0) },
+    "Rousettus aegyptius": { counts: new Array(12).fill(0) },
+    "Eptesicus bottae": { counts: new Array(12).fill(0) },
+    "Rhyneptesicus nasutus": { counts: new Array(12).fill(0) },
+    "Taphozous perforatus": { counts: new Array(12).fill(0) },
 
-  res.render("dashboard", { pie_counts: pie_counts, total_counts : total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts });
+  }
+  for (let record of counts_by_species_and_month) {
+    bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
+  }
+
+  res.render("dashboard", { pie_counts: pie_counts, total_counts: total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts });
 });
 
 
@@ -99,28 +113,26 @@ app.get("/test_month", async function (req, res) {
     {
 
       $group: {
-        _id:{month: { '$month' : "$time" }, bat_species: '$bat_species'},
+        _id: { month: { '$month': "$time" }, bat_species: '$bat_species' },
         count: { $sum: 1 }
       }
     }
   ]);
-
   bar_counts = {
-    
-      "Rhinopoma muscatellum": {counts: new Array(12).fill(0)},
-      "Myotis emarginatus":{counts: new Array(12).fill(0)},
-      "Pipistrellus kuhli": {counts:new Array(12).fill(0)},
-      "Asellia tridens": {counts:new Array(12).fill(0)},
-      "Rousettus aegyptius": {counts:new Array(12).fill(0)},
-      "Eptesicus bottae": {counts:new Array(12).fill(0)},
-      "Rhyneptesicus nasutus": {counts:new Array(12).fill(0)},
-      "Taphozous perforatus": {counts:new Array(12).fill(0)},
-  
+
+    "Rhinopoma muscatellum": { counts: new Array(12).fill(0) },
+    "Myotis emarginatus": { counts: new Array(12).fill(0) },
+    "Pipistrellus kuhli": { counts: new Array(12).fill(0) },
+    "Asellia tridens": { counts: new Array(12).fill(0) },
+    "Rousettus aegyptius": { counts: new Array(12).fill(0) },
+    "Eptesicus bottae": { counts: new Array(12).fill(0) },
+    "Rhyneptesicus nasutus": { counts: new Array(12).fill(0) },
+    "Taphozous perforatus": { counts: new Array(12).fill(0) },
+
   }
   for (let record of counts_by_species_and_month) {
     bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
   }
-  
   res.send(bar_counts);
 });
 

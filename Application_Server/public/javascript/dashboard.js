@@ -1,13 +1,15 @@
 var allLabels=[
-  "A.Tridens",
-  "E. Bottae",
-  "M. Emarginatus",
-  "P. kuhli",
-  "R. muscatellum",
-  "R. nasutus",
-  "R. aegyptius",
-  "T. perforatus",
+  "Rhinopoma muscatellum",
+  "Myotis emarginatus",
+  "Pipistrellus kuhli",
+  "Asellia tridens",
+  "Rousettus aegyptius",
+  "Eptesicus bottae",
+  "Rhyneptesicus nasutus",
+  "Taphozous perforatus"
 ];
+var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]
+var barColors = ["#a8e6cf", "#a3bded", "#e4dcf1", "#ff8b94", "#ffaaa5", "#ffd3b6", "#dcedc1", "#cbdadb"]
 // ----------------bar chart--------------
 
 var trace1={
@@ -15,7 +17,7 @@ var trace1={
   y: [1, 4, 9, 16],
   name: "A.Tridens",
   type: "bar",
-  marker: { color: "#a8e6cf " },
+  marker: { color: "#a8e6cf" },
 };
 var trace2={
   x: [1, 2, 3, 4],
@@ -29,7 +31,7 @@ var trace3={
   y: [15, 3, 4.5, 8],
   name: "P. kuhli",
   type: "bar",
-  marker: { color: " #e4dcf1" },
+  marker: { color: "#e4dcf1" },
 };
 
 var trace4={
@@ -69,6 +71,19 @@ var trace8={
   marker: { color: "#cbdadb" },
 };
 
+var barData = []
+for (let i = 0; i < 8; ++i){
+  barData.push({
+    x: months,
+    y: parsed_bar_counts[allLabels[i]].counts,
+    name:  allLabels[i][0]+'. '+allLabels[i].split(' ')[1],
+    type: 'bar',
+    marker: {color: barColors[i]},
+  });
+
+}
+console.log(barData)
+
 var data=[trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8];
 var layout={
   xaxis: { title: "X axis" },
@@ -80,7 +95,7 @@ var layout={
 };
 var config={ responsive: true };
 
-Plotly.newPlot("barChart", data, layout, config);
+Plotly.newPlot("barChart", barData, layout, config);
 // --------------Pie chart-------------------
 
 var ultimateColors=[

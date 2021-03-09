@@ -19,7 +19,8 @@
 <title>BatDetect | Dashboard</title>
 <script>
     var parsed_pie_counts= <%- JSON.stringify(pie_counts)%>;
-    console.log(parsed_pie_counts);
+    var parsed_bar_counts= <%- JSON.stringify(bar_counts)%>;
+
 </script>
 
 <body>
@@ -235,7 +236,7 @@
                     <!-- bar chart -->
                     <div class="card card-dark h-100">
                         <div class="card-header">
-                            <h3 class="card-title">Detections over time</h3>
+                            <h3 class="card-title">Detections by Month</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
