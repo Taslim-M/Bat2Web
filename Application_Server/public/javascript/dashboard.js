@@ -83,8 +83,6 @@ var config={ responsive: true };
 Plotly.newPlot("barChart", data, layout, config);
 // --------------Pie chart-------------------
 
-var allValues=[31, 24, 19, 18, 8, 31, 24, 19, 18, 8];
-
 var ultimateColors=[
   "#003f5c",
   "#2f4b7c",

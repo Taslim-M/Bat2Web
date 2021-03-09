@@ -58,17 +58,70 @@ app.get("/about-us", async function (req, res) {
   res.render("about-us");
 });
 app.get("/dashboard", async function (req, res) {
+
+  let total_counts = await Incident.countDocuments({});
+
+  let most_recent_detection = await Incident.find({}).sort({ time: "asc" }).limit(1)
+
+  // --------------- PIE CHART DATA v 
   let pie_counts = await Incident.aggregate([
     {
       $group: {
-        // Each `_id` must be unique, so if there are multiple
-        // documents with the same age, MongoDB will increment `count`.
         _id: '$bat_species',
         count: { $sum: 1 }
       }
     }
   ]);
-  res.render("dashboard", { pie_counts: pie_counts });
+
+  // --------------- PIE CHART DATA  ^ 
+
+
+  // Bar chart data
+  let bar_counts = await Incident.aggregate([
+    {
+      $group: {
+        _id:{"$month": '$time'},
+        count: { $sum: 1 }
+      }
+    }
+  ]);
+  bar_counts.sort((a,b) => a._id - b._id);
+
+
+  res.render("dashboard", { pie_counts: pie_counts, total_counts : total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts });
+});
+
+
+app.get("/test_month", async function (req, res) {
+
+  // Bar chart data
+  let counts_by_species_and_month = await Incident.aggregate([
+    {
+
+      $group: {
+        _id:{month: { '$month' : "$time" }, bat_species: '$bat_species'},
+        count: { $sum: 1 }
+      }
+    }
+  ]);
+
+  bar_counts = {
+    
+      "Rhinopoma muscatellum": {counts: new Array(12).fill(0)},
+      "Myotis emarginatus":{counts: new Array(12).fill(0)},
+      "Pipistrellus kuhli": {counts:new Array(12).fill(0)},
+      "Asellia tridens": {counts:new Array(12).fill(0)},
+      "Rousettus aegyptius": {counts:new Array(12).fill(0)},
+      "Eptesicus bottae": {counts:new Array(12).fill(0)},
+      "Rhyneptesicus nasutus": {counts:new Array(12).fill(0)},
+      "Taphozous perforatus": {counts:new Array(12).fill(0)},
+  
+  }
+  for (let record of counts_by_species_and_month) {
+    bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
+  }
+  
+  res.send(bar_counts);
 });
 
 // custom 404 page

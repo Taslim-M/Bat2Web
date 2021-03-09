@@ -48,7 +48,7 @@
                                 <!-- small box -->
                                 <div class="small-box bg-info">
                                     <div class="inner">
-                                        <h3>150</h3>
+                                        <h3><%=total_counts%></h3>
                                         <p>Total Detections</p>
                                     </div>
                                     <div class="icon">
@@ -85,7 +85,9 @@
                                 <!-- small box -->
                                 <div class="small-box bg-warning">
                                     <div class="inner">
-                                        <h3>44</h3>
+                                        <b><%=most_recent_detection.bat_species%></b><br>
+                                        <span><%=most_recent_detection.time.toLocaleString("en-US")%></span>
+
                                         <!-- date city and species  -->
                                         <p>Most Recent Detection</p>
                                     </div>
