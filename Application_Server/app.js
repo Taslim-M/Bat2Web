@@ -114,6 +114,7 @@ app.get("/dashboard", async function (req, res) {
 
   // ----- Time series data
 
+  //Data for total detections per day
   let count_by_day = await Incident.aggregate([
     {
       $project: {
@@ -128,15 +129,8 @@ app.get("/dashboard", async function (req, res) {
     }
   ]).sort({'_id.yearMonthDay': 'asc'});
 
-
-
-  res.render("dashboard", { pie_counts: pie_counts, total_counts: total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts, all_dates: all_dates_by_species, count_by_day: count_by_day});
-});
-
-app.get("/test_day", async function (req, res) {
-
-  // Bar chart data
-  let count_by_day_by_species = await Incident.aggregate([
+  //Data for detections per species per day
+  let raw_count_by_day_by_species = await Incident.aggregate([
     {
       $project: {
         yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
@@ -149,34 +143,57 @@ app.get("/test_day", async function (req, res) {
         count: { $sum: 1 }
       }
     }
-  ]);
+  ]).sort({'_id.yearMonthDay': 'asc'});
 
-  let count_by_day = await Incident.aggregate([
+  let count_by_day_by_species = {};
+  for (let summary of raw_count_by_day_by_species) {
+    if (count_by_day_by_species[summary._id.bat_species] == null) {
+      count_by_day_by_species[summary._id.bat_species] = {
+        dates: [summary._id.yearMonthDay],
+        counts: [summary.count],
+      };
+    }
+    else {
+      count_by_day_by_species[summary._id.bat_species].dates.push(summary._id.yearMonthDay);
+      count_by_day_by_species[summary._id.bat_species].counts.push(summary.count);
+    }
+  }
+
+  res.render("dashboard", { pie_counts: pie_counts, total_counts: total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts, all_dates: all_dates_by_species, count_by_day: count_by_day, count_by_day_by_species: count_by_day_by_species});
+});
+
+app.get("/test_day", async function (req, res) {
+
+  let raw_count_by_day_by_species = await Incident.aggregate([
     {
       $project: {
         yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
+        bat_species: '$bat_species'
       }
     },
     {
       $group: {
-        _id: { yearMonthDay: '$yearMonthDay'},
+        _id: { yearMonthDay: '$yearMonthDay', bat_species: '$bat_species' },
         count: { $sum: 1 }
       }
     }
-  ]);
+  ]).sort({'_id.yearMonthDay': 'asc'});
 
+  let count_by_day_by_species = {};
+  for (let summary of raw_count_by_day_by_species) {
+    if (count_by_day_by_species[summary._id.bat_species] == null) {
+      count_by_day_by_species[summary._id.bat_species] = {
+        dates: [summary._id.yearMonthDay],
+        counts: [summary.count],
+      };
+    }
+    else {
+      count_by_day_by_species[summary._id.bat_species].dates.push(summary._id.yearMonthDay);
+      count_by_day_by_species[summary._id.bat_species].counts.push(summary.count);
+    }
+  }
 
-  // let all_dates = {};
-  // for (let species_daily_count of count_by_day_by_species) {
-  //   if (all_dates[detection.bat_species] == null) {
-  //     all_dates[detection.bat_species] = [detection.time];
-  //   }
-  //   else {
-  //     all_dates[detection.bat_species].push(detection.time);
-  //   }
-  // }
-
-  res.send(count_by_day);
+  res.send(count_by_day_by_species);
 });
 
 // custom 404 page
