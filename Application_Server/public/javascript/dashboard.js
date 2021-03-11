@@ -136,68 +136,88 @@ var layout={
 
 Plotly.newPlot("pieChart", data, layout, config);
 
+//parsed_all_dates = parsed_all_dates.map(x => new Date(x.time));
+console.log(parsed_all_dates['Rhinopoma muscatellum']);
+// console.log(typeof(parsed_all_dates[0]));
+
+
+var histData = []
+for (let i = 0; i < 8; ++i){
+  histData.push({
+    x: parsed_all_dates[allLabels[i]],
+    name:  allLabels[i][0]+'. '+allLabels[i].split(' ')[1],
+    type: 'histogram',
+    marker: {color: barColors[i]}
+  });
+
+}
+
+
+//var data = [trace];
+Plotly.newPlot('timeSeriesChart', histData, {barmode: "stack", autosize: true, bargap: 0});
+
 // ------------------time series chart -----------------
-Plotly.d3.csv(
-  "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",
-  function (err, rows) {
-    function unpack(rows, key) {
-      return rows.map(function (row) {
-        return row[key];
-      });
-    }
+// Plotly.d3.csv(
+//   "https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",
+//   function (err, rows) {
+//     function unpack(rows, key) {
+//       return rows.map(function (row) {
+//         return row[key];
+//       });
+//     }
 
-    var trace1={
-      type: "scatter",
-      mode: "lines",
-      name: "AAPL High",
-      x: unpack(rows, "Date"),
-      y: unpack(rows, "AAPL.High"),
-      line: { color: "#17BECF" },
-    };
+//     var trace1={
+//       type: "scatter",
+//       mode: "lines",
+//       name: "AAPL High",
+//       x: unpack(rows, "Date"),
+//       y: unpack(rows, "AAPL.High"),
+//       line: { color: "#17BECF" },
+//     };
 
-    var trace2={
-      type: "scatter",
-      mode: "lines",
-      name: "AAPL Low",
-      x: unpack(rows, "Date"),
-      y: unpack(rows, "AAPL.Low"),
-      line: { color: "#7F7F7F" },
-    };
+//     var trace2={
+//       type: "scatter",
+//       mode: "lines",
+//       name: "AAPL Low",
+//       x: unpack(rows, "Date"),
+//       y: unpack(rows, "AAPL.Low"),
+//       line: { color: "#7F7F7F" },
+//     };
 
-    var data=[trace1, trace2];
+//     var data=[trace1, trace2];
 
-    var layout={
-      // title: "Time Series with Rangeslider",
-      xaxis: {
-        autorange: true,
-        range: ["2015-02-17", "2017-02-16"],
-        rangeselector: {
-          buttons: [
-            {
-              count: 1,
-              label: "1m",
-              step: "month",
-              stepmode: "backward",
-            },
-            {
-              count: 6,
-              label: "6m",
-              step: "month",
-              stepmode: "backward",
-            },
-            { step: "all" },
-          ],
-        },
-        rangeslider: { range: ["2015-02-17", "2017-02-16"] },
-        type: "date",
-      },
-      yaxis: {
-        autorange: true,
-        range: [86.8700008333, 138.870004167],
-        type: "linear",
-      },
-    };
+//     var layout={
+//       // title: "Time Series with Rangeslider",
+//       xaxis: {
+//         autorange: true,
+//         range: ["2015-02-17", "2017-02-16"],
+//         rangeselector: {
+//           buttons: [
+//             {
+//               count: 1,
+//               label: "1m",
+//               step: "month",
+//               stepmode: "backward",
+//             },
+//             {
+//               count: 6,
+//               label: "6m",
+//               step: "month",
+//               stepmode: "backward",
+//             },
+//             { step: "all" },
+//           ],
+//         },
+//         rangeslider: { range: ["2015-02-17", "2017-02-16"] },
+//         type: "date",
+//       },
+//       yaxis: {
+//         autorange: true,
+//         range: [86.8700008333, 138.870004167],
+//         type: "linear",
+//       },
+//     };
 
-    Plotly.newPlot("timeSeriesChart", data, layout, config);
-  }
-);
+//     Plotly.newPlot("timeSeriesChart", data, layout, config);
+//   }
+// );

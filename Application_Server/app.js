@@ -75,7 +75,7 @@ app.get("/dashboard", async function (req, res) {
 
   // --------------- PIE CHART DATA  ^ 
 
-  // Bar chart data
+  // --------------- Bar chart data
   let counts_by_species_and_month = await Incident.aggregate([
     {
 
@@ -87,7 +87,6 @@ app.get("/dashboard", async function (req, res) {
   ]);
   
   bar_counts = {
-
     "Rhinopoma muscatellum": { counts: new Array(12).fill(0) },
     "Myotis emarginatus": { counts: new Array(12).fill(0) },
     "Pipistrellus kuhli": { counts: new Array(12).fill(0) },
@@ -96,13 +95,26 @@ app.get("/dashboard", async function (req, res) {
     "Eptesicus bottae": { counts: new Array(12).fill(0) },
     "Rhyneptesicus nasutus": { counts: new Array(12).fill(0) },
     "Taphozous perforatus": { counts: new Array(12).fill(0) },
-
   }
   for (let record of counts_by_species_and_month) {
     bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
   }
 
-  res.render("dashboard", { pie_counts: pie_counts, total_counts: total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts });
+  // -------------------
+
+  // ----- Histogram data
+  let all_detections = await Incident.find({});
+  let all_dates = {};
+  for (let detection of all_detections){
+    if (all_dates[detection.bat_species] == null){
+      all_dates[detection.bat_species] = [detection.time];
+    }
+    else {
+      all_dates[detection.bat_species].push(detection.time);
+    }
+  }
+
+  res.render("dashboard", { pie_counts: pie_counts, total_counts: total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts, all_dates: all_dates });
 });
 
 
