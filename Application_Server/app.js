@@ -59,11 +59,12 @@ app.get("/about-us", async function (req, res) {
 });
 app.get("/dashboard", async function (req, res) {
 
+  // -------------- Dashboard Panels data
   let total_counts = await Incident.countDocuments({});
 
   let most_recent_detection = await Incident.find({}).sort({ time: "desc" }).limit(1)
 
-  // --------------- PIE CHART DATA v 
+  // --------------- Pie chart data
   let pie_counts = await Incident.aggregate([
     {
       $group: {
@@ -73,12 +74,8 @@ app.get("/dashboard", async function (req, res) {
     }
   ]);
 
-  // --------------- PIE CHART DATA  ^ 
-
   // --------------- Bar chart data
-  let counts_by_species_and_month = await Incident.aggregate([
-    {
-
+  let counts_by_species_and_month = await Incident.aggregate([{
       $group: {
         _id: { month: { '$month': "$time" }, bat_species: '$bat_species' },
         count: { $sum: 1 }
@@ -86,22 +83,23 @@ app.get("/dashboard", async function (req, res) {
     }
   ]);
 
-  bar_counts = {
-    "Rhinopoma muscatellum": { counts: new Array(12).fill(0) },
-    "Myotis emarginatus": { counts: new Array(12).fill(0) },
-    "Pipistrellus kuhli": { counts: new Array(12).fill(0) },
-    "Asellia tridens": { counts: new Array(12).fill(0) },
-    "Rousettus aegyptius": { counts: new Array(12).fill(0) },
-    "Eptesicus bottae": { counts: new Array(12).fill(0) },
-    "Rhyneptesicus nasutus": { counts: new Array(12).fill(0) },
-    "Taphozous perforatus": { counts: new Array(12).fill(0) },
-  }
+  //Restructuring data serverside to fit Plotly reqs
+  bar_counts = {};
   for (let record of counts_by_species_and_month) {
-    bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
+    if (bar_counts[record._id.bat_species] == null){
+      bar_counts[record._id.bat_species] = {
+        counts: new Array(12).fill(0),
+      }
+    }
+    else{
+      bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
+    }
   }
 
   // ----- Histogram data
   let all_detections = await Incident.find({});
+  //Restructuring data serverside to fit Plotly reqs
+  //Final structure: { <speciesName> : [ <dateOfDetection1>, ... ], ... }
   let all_dates_by_species = {};
   for (let detection of all_detections) {
     if (all_dates_by_species[detection.bat_species] == null) {
@@ -114,7 +112,7 @@ app.get("/dashboard", async function (req, res) {
 
   // ----- Time series data
 
-  //Data for total detections per day
+  //Query for total detections per day
   let count_by_day = await Incident.aggregate([
     {
       $project: {
@@ -129,7 +127,7 @@ app.get("/dashboard", async function (req, res) {
     }
   ]).sort({'_id.yearMonthDay': 'asc'});
 
-  //Data for detections per species per day
+  //Query for detections per species per day
   let raw_count_by_day_by_species = await Incident.aggregate([
     {
       $project: {
@@ -145,6 +143,8 @@ app.get("/dashboard", async function (req, res) {
     }
   ]).sort({'_id.yearMonthDay': 'asc'});
 
+  //Restructuring data serverside to fit Plotly reqs
+  //Final structure: { <speciesName> : { dates: [] , counts : [] }, ...}
   let count_by_day_by_species = {};
   for (let summary of raw_count_by_day_by_species) {
     if (count_by_day_by_species[summary._id.bat_species] == null) {
