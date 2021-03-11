@@ -21,6 +21,8 @@
     var parsed_pie_counts= <%- JSON.stringify(pie_counts)%>;
     var parsed_bar_counts= <%- JSON.stringify(bar_counts)%>;
     var parsed_all_dates = <%- JSON.stringify(all_dates)%>;
+    var parsed_count_by_day = <%- JSON.stringify(count_by_day)%>;
+
 </script>
 
 <body>
@@ -262,6 +264,30 @@
 
                     <div class=" card-header">
                         <h3 class="card-title">Detection per Species over Time</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" style="background-color: rgb(245, 231, 250);">
+                    <div id="histogram">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- TRIAL row 4 -->
+            <div class="container-fluid">
+                <div class="card card-purple">
+
+                    <div class=" card-header">
+                        <h3 class="card-title">Detection per Species over Timeseries</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                 <i class="fas fa-minus"></i>

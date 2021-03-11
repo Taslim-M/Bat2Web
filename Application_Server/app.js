@@ -61,7 +61,7 @@ app.get("/dashboard", async function (req, res) {
 
   let total_counts = await Incident.countDocuments({});
 
-  let most_recent_detection = await Incident.find({}).sort({ time: "asc" }).limit(1)
+  let most_recent_detection = await Incident.find({}).sort({ time: "desc" }).limit(1)
 
   // --------------- PIE CHART DATA v 
   let pie_counts = await Incident.aggregate([
@@ -85,7 +85,7 @@ app.get("/dashboard", async function (req, res) {
       }
     }
   ]);
-  
+
   bar_counts = {
     "Rhinopoma muscatellum": { counts: new Array(12).fill(0) },
     "Myotis emarginatus": { counts: new Array(12).fill(0) },
@@ -100,52 +100,83 @@ app.get("/dashboard", async function (req, res) {
     bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
   }
 
-  // -------------------
-
   // ----- Histogram data
   let all_detections = await Incident.find({});
-  let all_dates = {};
-  for (let detection of all_detections){
-    if (all_dates[detection.bat_species] == null){
-      all_dates[detection.bat_species] = [detection.time];
+  let all_dates_by_species = {};
+  for (let detection of all_detections) {
+    if (all_dates_by_species[detection.bat_species] == null) {
+      all_dates_by_species[detection.bat_species] = [detection.time];
     }
     else {
-      all_dates[detection.bat_species].push(detection.time);
+      all_dates_by_species[detection.bat_species].push(detection.time);
     }
   }
 
-  res.render("dashboard", { pie_counts: pie_counts, total_counts: total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts, all_dates: all_dates });
+  // ----- Time series data
+
+  let count_by_day = await Incident.aggregate([
+    {
+      $project: {
+        yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
+      }
+    },
+    {
+      $group: {
+        _id: { yearMonthDay: '$yearMonthDay'},
+        count: { $sum: 1 }
+      }
+    }
+  ]).sort({'_id.yearMonthDay': 'asc'});
+
+
+
+  res.render("dashboard", { pie_counts: pie_counts, total_counts: total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts, all_dates: all_dates_by_species, count_by_day: count_by_day});
 });
 
-
-app.get("/test_month", async function (req, res) {
+app.get("/test_day", async function (req, res) {
 
   // Bar chart data
-  let counts_by_species_and_month = await Incident.aggregate([
+  let count_by_day_by_species = await Incident.aggregate([
     {
-
+      $project: {
+        yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
+        bat_species: '$bat_species'
+      }
+    },
+    {
       $group: {
-        _id: { month: { '$month': "$time" }, bat_species: '$bat_species' },
+        _id: { yearMonthDay: '$yearMonthDay', bat_species: '$bat_species' },
         count: { $sum: 1 }
       }
     }
   ]);
-  bar_counts = {
 
-    "Rhinopoma muscatellum": { counts: new Array(12).fill(0) },
-    "Myotis emarginatus": { counts: new Array(12).fill(0) },
-    "Pipistrellus kuhli": { counts: new Array(12).fill(0) },
-    "Asellia tridens": { counts: new Array(12).fill(0) },
-    "Rousettus aegyptius": { counts: new Array(12).fill(0) },
-    "Eptesicus bottae": { counts: new Array(12).fill(0) },
-    "Rhyneptesicus nasutus": { counts: new Array(12).fill(0) },
-    "Taphozous perforatus": { counts: new Array(12).fill(0) },
+  let count_by_day = await Incident.aggregate([
+    {
+      $project: {
+        yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
+      }
+    },
+    {
+      $group: {
+        _id: { yearMonthDay: '$yearMonthDay'},
+        count: { $sum: 1 }
+      }
+    }
+  ]);
 
-  }
-  for (let record of counts_by_species_and_month) {
-    bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
-  }
-  res.send(bar_counts);
+
+  // let all_dates = {};
+  // for (let species_daily_count of count_by_day_by_species) {
+  //   if (all_dates[detection.bat_species] == null) {
+  //     all_dates[detection.bat_species] = [detection.time];
+  //   }
+  //   else {
+  //     all_dates[detection.bat_species].push(detection.time);
+  //   }
+  // }
+
+  res.send(count_by_day);
 });
 
 // custom 404 page

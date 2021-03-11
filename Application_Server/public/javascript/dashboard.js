@@ -151,10 +151,21 @@ for (let i = 0; i < 8; ++i){
   });
 
 }
-
-
 //var data = [trace];
-Plotly.newPlot('timeSeriesChart', histData, {barmode: "stack", autosize: true, bargap: 0});
+Plotly.newPlot('histogram', histData, {barmode: "stack", autosize: true, bargap: 0});
+
+// ----- TRIAL TIMESERIES
+
+
+var data = [
+  {
+    x: parsed_count_by_day.map(x => x._id.yearMonthDay),
+    y: parsed_count_by_day.map(x => x.count),
+    type: 'scatter'
+  }
+];
+
+Plotly.newPlot('timeSeriesChart', data);
 
 // ------------------time series chart -----------------
 // Plotly.d3.csv(
