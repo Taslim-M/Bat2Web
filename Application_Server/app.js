@@ -40,7 +40,6 @@ app.get("/filter", async function (req, res) {
   console.log(from_date);
   console.log(to_date);
 
-
   const incidents = await Incident.find({
     bat_species: sp_name,
     time: {
@@ -50,49 +49,59 @@ app.get("/filter", async function (req, res) {
   })
     .sort({ time: "desc" })
     .limit(num_detections);
-  msg = "Showing " + incidents.length + " results for " + sp_name + " from " + from_date.toDateString() + " to " + to_date.toDateString();
+  msg =
+    "Showing " +
+    incidents.length +
+    " results for " +
+    sp_name +
+    " from " +
+    from_date.toDateString() +
+    " to " +
+    to_date.toDateString();
   res.render("index", { incidents: incidents, msg: msg });
-
 });
 app.get("/about-us", async function (req, res) {
   res.render("about-us");
 });
 app.get("/dashboard", async function (req, res) {
-
   // -------------- Dashboard Panels data
   let total_counts = await Incident.countDocuments({});
 
-  let most_recent_detection = await Incident.find({}).sort({ time: "desc" }).limit(1)
+  let most_recent_detection = await Incident.find({})
+    .sort({ time: "desc" })
+    .limit(1);
 
+  let unique_species_count = await Incident.distinct("bat_species");
   // --------------- Pie chart data
   let pie_counts = await Incident.aggregate([
     {
       $group: {
-        _id: '$bat_species',
-        count: { $sum: 1 }
-      }
-    }
+        _id: "$bat_species",
+        count: { $sum: 1 },
+      },
+    },
   ]);
 
   // --------------- Bar chart data
-  let counts_by_species_and_month = await Incident.aggregate([{
+  let counts_by_species_and_month = await Incident.aggregate([
+    {
       $group: {
-        _id: { month: { '$month': "$time" }, bat_species: '$bat_species' },
-        count: { $sum: 1 }
-      }
-    }
+        _id: { month: { $month: "$time" }, bat_species: "$bat_species" },
+        count: { $sum: 1 },
+      },
+    },
   ]);
 
   //Restructuring data serverside to fit Plotly reqs
   bar_counts = {};
   for (let record of counts_by_species_and_month) {
-    if (bar_counts[record._id.bat_species] == null){
+    if (bar_counts[record._id.bat_species] == null) {
       bar_counts[record._id.bat_species] = {
         counts: new Array(12).fill(0),
-      }
-    }
-    else{
-      bar_counts[record._id.bat_species].counts[record._id.month - 1] = record.count;
+      };
+    } else {
+      bar_counts[record._id.bat_species].counts[record._id.month - 1] =
+        record.count;
     }
   }
 
@@ -104,8 +113,7 @@ app.get("/dashboard", async function (req, res) {
   for (let detection of all_detections) {
     if (all_dates_by_species[detection.bat_species] == null) {
       all_dates_by_species[detection.bat_species] = [detection.time];
-    }
-    else {
+    } else {
       all_dates_by_species[detection.bat_species].push(detection.time);
     }
   }
@@ -117,31 +125,31 @@ app.get("/dashboard", async function (req, res) {
     {
       $project: {
         yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
-      }
+      },
     },
     {
       $group: {
-        _id: { yearMonthDay: '$yearMonthDay'},
-        count: { $sum: 1 }
-      }
-    }
-  ]).sort({'_id.yearMonthDay': 'asc'});
+        _id: { yearMonthDay: "$yearMonthDay" },
+        count: { $sum: 1 },
+      },
+    },
+  ]).sort({ "_id.yearMonthDay": "asc" });
 
   //Query for detections per species per day
   let raw_count_by_day_by_species = await Incident.aggregate([
     {
       $project: {
         yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
-        bat_species: '$bat_species'
-      }
+        bat_species: "$bat_species",
+      },
     },
     {
       $group: {
-        _id: { yearMonthDay: '$yearMonthDay', bat_species: '$bat_species' },
-        count: { $sum: 1 }
-      }
-    }
-  ]).sort({'_id.yearMonthDay': 'asc'});
+        _id: { yearMonthDay: "$yearMonthDay", bat_species: "$bat_species" },
+        count: { $sum: 1 },
+      },
+    },
+  ]).sort({ "_id.yearMonthDay": "asc" });
 
   //Restructuring data serverside to fit Plotly reqs
   //Final structure: { <speciesName> : { dates: [] , counts : [] }, ...}
@@ -152,32 +160,43 @@ app.get("/dashboard", async function (req, res) {
         dates: [summary._id.yearMonthDay],
         counts: [summary.count],
       };
-    }
-    else {
-      count_by_day_by_species[summary._id.bat_species].dates.push(summary._id.yearMonthDay);
-      count_by_day_by_species[summary._id.bat_species].counts.push(summary.count);
+    } else {
+      count_by_day_by_species[summary._id.bat_species].dates.push(
+        summary._id.yearMonthDay
+      );
+      count_by_day_by_species[summary._id.bat_species].counts.push(
+        summary.count
+      );
     }
   }
 
-  res.render("dashboard", { pie_counts: pie_counts, total_counts: total_counts, most_recent_detection: most_recent_detection[0], bar_counts: bar_counts, all_dates: all_dates_by_species, count_by_day: count_by_day, count_by_day_by_species: count_by_day_by_species});
+  res.render("dashboard", {
+    pie_counts: pie_counts,
+    total_counts: total_counts,
+    most_recent_detection: most_recent_detection[0],
+    bar_counts: bar_counts,
+    all_dates: all_dates_by_species,
+    count_by_day: count_by_day,
+    count_by_day_by_species: count_by_day_by_species,
+    unique_species_count: unique_species_count,
+  });
 });
 
 app.get("/test_day", async function (req, res) {
-
   let raw_count_by_day_by_species = await Incident.aggregate([
     {
       $project: {
         yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
-        bat_species: '$bat_species'
-      }
+        bat_species: "$bat_species",
+      },
     },
     {
       $group: {
-        _id: { yearMonthDay: '$yearMonthDay', bat_species: '$bat_species' },
-        count: { $sum: 1 }
-      }
-    }
-  ]).sort({'_id.yearMonthDay': 'asc'});
+        _id: { yearMonthDay: "$yearMonthDay", bat_species: "$bat_species" },
+        count: { $sum: 1 },
+      },
+    },
+  ]).sort({ "_id.yearMonthDay": "asc" });
 
   let count_by_day_by_species = {};
   for (let summary of raw_count_by_day_by_species) {
@@ -186,10 +205,13 @@ app.get("/test_day", async function (req, res) {
         dates: [summary._id.yearMonthDay],
         counts: [summary.count],
       };
-    }
-    else {
-      count_by_day_by_species[summary._id.bat_species].dates.push(summary._id.yearMonthDay);
-      count_by_day_by_species[summary._id.bat_species].counts.push(summary.count);
+    } else {
+      count_by_day_by_species[summary._id.bat_species].dates.push(
+        summary._id.yearMonthDay
+      );
+      count_by_day_by_species[summary._id.bat_species].counts.push(
+        summary.count
+      );
     }
   }
 

@@ -23,7 +23,7 @@
     var parsed_all_dates = <%- JSON.stringify(all_dates)%>;
     var parsed_count_by_day = <%- JSON.stringify(count_by_day)%>;
     var parsed_count_by_day_by_species = <%- JSON.stringify(count_by_day_by_species)%>;
-    
+    var  unique_species_count= <%- JSON.stringify(unique_species_count)%>;
 </script>
 
 <body>
@@ -69,8 +69,8 @@
                                 <div class="small-box bg-success">
                                     <div class="inner">
                                         <h3>
-                                            53
-                                            <sup style="font-size: 20px">%</sup>
+                                           <%=unique_species_count.length%>
+                                          
                                         </h3>
                                         <p>Different Bat Species</p>
                                     </div>
