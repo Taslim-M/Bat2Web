@@ -10,6 +10,15 @@ var allLabels = [
 ];
 var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 var barColors = ["#a8e6cf", "#a3bded", "#e4dcf1", "#ff8b94", "#ffaaa5", "#ffd3b6", "#dcedc1", "#cbdadb"]
+
+/**
+ * Get first letter followed by second name
+ * @param {String} fullBatName 
+ */
+function getShortBatName(fullBatName) {
+  return fullBatName[0] + '. ' + fullBatName.split(' ')[1];
+}
+
 // ----------------bar chart--------------
 
 var barData = []
@@ -17,7 +26,7 @@ for (let i = 0; i < 8; ++i) {
   barData.push({
     x: months,
     y: parsed_bar_counts[allLabels[i]].counts,
-    name: allLabels[i][0] + '. ' + allLabels[i].split(' ')[1],
+    name: getShortBatName(allLabels[i]),
     type: 'bar',
     marker: { color: barColors[i] },
   });
@@ -54,7 +63,7 @@ var ultimateColors = [
 var data = [
   {
     values: parsed_pie_counts.map(x => x.count),
-    labels: parsed_pie_counts.map(x => x._id[0] + '. ' + x._id.split(' ')[1]),
+    labels: parsed_pie_counts.map(x => getShortBatName(x._id)),
     type: "pie",
     marker: {
       colors: ultimateColors,
@@ -84,7 +93,7 @@ var histData = []
 for (let i = 0; i < 8; ++i) {
   histData.push({
     x: parsed_all_dates[allLabels[i]],
-    name: allLabels[i][0] + '. ' + allLabels[i].split(' ')[1],
+    name: getShortBatName(allLabels[i]),
     type: 'histogram',
     marker: { color: barColors[i] }
   });
@@ -108,7 +117,7 @@ for (let i = 0; i < 8; ++i) {
   timeseriesData.push({
     type: "scatter",
     mode: "lines",
-    name: allLabels[i][0] + '. ' + allLabels[i].split(' ')[1],
+    name: getShortBatName(allLabels[i]),
     x: parsed_count_by_day_by_species[allLabels[i]].dates,
     y: parsed_count_by_day_by_species[allLabels[i]].counts,
     line: { 

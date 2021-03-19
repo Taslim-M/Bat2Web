@@ -182,42 +182,6 @@ app.get("/dashboard", async function (req, res) {
   });
 });
 
-app.get("/test_day", async function (req, res) {
-  let raw_count_by_day_by_species = await Incident.aggregate([
-    {
-      $project: {
-        yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$time" } },
-        bat_species: "$bat_species",
-      },
-    },
-    {
-      $group: {
-        _id: { yearMonthDay: "$yearMonthDay", bat_species: "$bat_species" },
-        count: { $sum: 1 },
-      },
-    },
-  ]).sort({ "_id.yearMonthDay": "asc" });
-
-  let count_by_day_by_species = {};
-  for (let summary of raw_count_by_day_by_species) {
-    if (count_by_day_by_species[summary._id.bat_species] == null) {
-      count_by_day_by_species[summary._id.bat_species] = {
-        dates: [summary._id.yearMonthDay],
-        counts: [summary.count],
-      };
-    } else {
-      count_by_day_by_species[summary._id.bat_species].dates.push(
-        summary._id.yearMonthDay
-      );
-      count_by_day_by_species[summary._id.bat_species].counts.push(
-        summary.count
-      );
-    }
-  }
-
-  res.send(count_by_day_by_species);
-});
-
 // custom 404 page
 app.use(function (req, res) {
   res.type("text/plain");
