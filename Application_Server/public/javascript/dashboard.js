@@ -16,6 +16,7 @@ var barColors = ["#a8e6cf", "#a3bded", "#e4dcf1", "#ff8b94", "#ffaaa5", "#ffd3b6
  * @param {String} fullBatName 
  */
 function getShortBatName(fullBatName) {
+  if (fullBatName.split(' ').length == 1) return fullBatName;
   return fullBatName[0] + '. ' + fullBatName.split(' ')[1];
 }
 
