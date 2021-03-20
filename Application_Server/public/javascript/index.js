@@ -15,6 +15,7 @@ $("#toggleMapTable").on("click", function () {
 let map;
 var allMarkers = [];
 var heatmap;
+var legend = document.getElementById("legend");
 $("#city").on("change", function () {
   map.data.forEach(function (feature) {
     map.data.remove(feature);
@@ -47,8 +48,8 @@ function initMap() {
   });
 
   clearAllMarkers();
-  console.log(parsed_incidents[0].bat_species);
-  console.log(parsed_incidents[0].latitude);
+  // console.log(parsed_incidents[0].bat_species);
+  // console.log(parsed_incidents[0].latitude);
   //------heatmap-------------------
   const heatmapControlDiv = document.createElement("div");
   heatmapControl(heatmapControlDiv, map);
@@ -56,11 +57,13 @@ function initMap() {
 
   //------------------------------------
   showMarkers();
+  createLegend();
+  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
 }
 
 //-------------------- Markers-----------
 
-markerColorCode = new Map();
+var markerColorCode = new Map();
 markerColorCode["Asellia tridens"] = "blue";
 markerColorCode["Eptesicus bottae"] = "green";
 markerColorCode["Myotis emarginatus"] = "yellow";
@@ -71,11 +74,16 @@ markerColorCode["Rousettus aegyptius"] = "ltblue";
 markerColorCode["Taphozous perforatus"] = "red";
 markerColorCode["Other"] = "brown";
 
+var heatMapColorCode = new Map();
+heatMapColorCode["Dense"] = "red";
+heatMapColorCode["Medium"] = "yellow";
+heatMapColorCode["Light"] = "green";
+
 function showMarkers() {
   clearAllMarkers();
 
   for (var incid of parsed_incidents) {
-    console.log(incid.latitude);
+    // console.log(incid.latitude);
     color = markerColorCode[incid.bat_species];
     const marker = new google.maps.Marker({
       position: { lat: incid.latitude, lng: incid.longitude },
@@ -109,18 +117,32 @@ function showMarkers() {
 
     allMarkers.push(marker);
   }
+}
 
-  const legend = document.getElementById("legend");
-
+function createLegend() {
+  legend.innerHTML = "<h5>Legend</h5>";
+  legend.innerHTML = "";
   for (const key in markerColorCode) {
-    const color=markerColorCode[key]=='ltblue'? 'lightskyblue' : markerColorCode[key];
-    const shortenedName = key=='Other' ? 'Other' : key[0] + '. ' + key.split(' ').slice(-1)[0]
+    const color =
+      markerColorCode[key] == "ltblue" ? "lightskyblue" : markerColorCode[key];
+    const shortenedName =
+      key == "Other" ? "Other" : key[0] + ". " + key.split(" ").slice(-1)[0];
     const div = document.createElement("div");
-    div.innerHTML = '<b style="color:'+color+'">'+shortenedName+'</b>';
+    div.innerHTML = '<b style="color:' + color + '">' + shortenedName + "</b>";
     legend.appendChild(div);
   }
-  map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+}
 
+function createHeatLegend() {
+  legend.innerHTML = "";
+  legend.innerHTML = "<h5>Legend</h5> <p>Population Density: \n</p>";
+  for (const key in heatMapColorCode) {
+    const color = heatMapColorCode[key];
+    const div = document.createElement("div");
+    div.innerHTML = '<b style="color:' + color + '">' + key + "</b>";
+    console.log(div);
+    legend.appendChild(div);
+  }
 }
 
 function getHeatmapData() {
@@ -168,12 +190,18 @@ function heatmapControl(controlDiv, map) {
       heatmap.setMap(map);
       controlUI.title = "Click to hide heatmap and view markers";
       controlText.innerHTML = "Hide Heatmap";
+      createHeatLegend();
+      // legend.style.display = "none";
+      // console.log(legend.style.display);
     } else {
       show = true;
       window.heatmap.setMap(null);
       showMarkers();
       controlUI.title = "Click to hide markers and view heatmap";
       controlText.innerHTML = "Show Heatmap";
+      createLegend();
+      // legend.style.display = "block";
+      // console.log(legend.style.display);
     }
   });
 }
