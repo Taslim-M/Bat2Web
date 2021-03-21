@@ -57,7 +57,7 @@ function initMap() {
 
   //------------------------------------
   showMarkers();
-  createLegend();
+  showMarkerLegend();
   map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
 }
 
@@ -119,7 +119,7 @@ function showMarkers() {
   }
 }
 
-function createLegend() {
+function showMarkerLegend() {
   legend.innerHTML = "<h5>Legend</h5>";
   legend.innerHTML = "";
   for (const key in markerColorCode) {
@@ -133,7 +133,7 @@ function createLegend() {
   }
 }
 
-function createHeatLegend() {
+function showHeatmapLegend() {
   legend.innerHTML = "";
   legend.innerHTML = "<h5>Legend</h5> <p>Population Density: \n</p>";
   for (const key in heatMapColorCode) {
@@ -190,7 +190,7 @@ function heatmapControl(controlDiv, map) {
       heatmap.setMap(map);
       controlUI.title = "Click to hide heatmap and view markers";
       controlText.innerHTML = "Hide Heatmap";
-      createHeatLegend();
+      showHeatmapLegend();
       // legend.style.display = "none";
       // console.log(legend.style.display);
     } else {
@@ -199,7 +199,7 @@ function heatmapControl(controlDiv, map) {
       showMarkers();
       controlUI.title = "Click to hide markers and view heatmap";
       controlText.innerHTML = "Show Heatmap";
-      createLegend();
+      showMarkerLegend();
       // legend.style.display = "block";
       // console.log(legend.style.display);
     }
