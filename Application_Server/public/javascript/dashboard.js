@@ -36,8 +36,8 @@ for (let i = 0; i < 8; ++i) {
 console.log(barData)
 
 var layout = {
-  xaxis: { title: "X axis" },
-  yaxis: { title: "Y axis" },
+  xaxis: { title: "Month" },
+  yaxis: { title: "Number of Detections" },
   barmode: "relative",
   margin: { t: 0, r: 0 }, // no left and bottom margin so that scale is visible
   fontsize: 18,
