@@ -6,34 +6,55 @@ var allLabels = [
   "Rousettus aegyptius",
   "Eptesicus bottae",
   "Rhyneptesicus nasutus",
-  "Taphozous perforatus"
+  "Taphozous perforatus",
 ];
-var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-var barColors = ["#a8e6cf", "#a3bded", "#e4dcf1", "#ff8b94", "#ffaaa5", "#ffd3b6", "#dcedc1", "#cbdadb"]
+var months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+var barColors = [
+  "#a8e6cf",
+  "#a3bded",
+  "#e4dcf1",
+  "#ff8b94",
+  "#ffaaa5",
+  "#ffd3b6",
+  "#dcedc1",
+  "#cbdadb",
+];
 
 /**
  * Get first letter followed by second name
- * @param {String} fullBatName 
+ * @param {String} fullBatName
  */
 function getShortBatName(fullBatName) {
-  if (fullBatName.split(' ').length == 1) return fullBatName;
-  return fullBatName[0] + '. ' + fullBatName.split(' ')[1];
+  if (fullBatName.split(" ").length == 1) return fullBatName;
+  return fullBatName[0] + ". " + fullBatName.split(" ")[1];
 }
 
 // ----------------bar chart--------------
 
-var barData = []
+var barData = [];
 for (let i = 0; i < 8; ++i) {
   barData.push({
     x: months,
     y: parsed_bar_counts[allLabels[i]].counts,
     name: getShortBatName(allLabels[i]),
-    type: 'bar',
+    type: "bar",
     marker: { color: barColors[i] },
   });
-
 }
-console.log(barData)
+console.log(barData);
 
 var layout = {
   xaxis: { title: "Month" },
@@ -46,7 +67,6 @@ var layout = {
 var config = { responsive: true };
 
 Plotly.newPlot("barChart", barData, layout, config);
-
 
 // --------------Pie chart-------------------
 
@@ -63,8 +83,8 @@ var ultimateColors = [
 
 var data = [
   {
-    values: parsed_pie_counts.map(x => x.count),
-    labels: parsed_pie_counts.map(x => getShortBatName(x._id)),
+    values: parsed_pie_counts.map((x) => x.count),
+    labels: parsed_pie_counts.map((x) => getShortBatName(x._id)),
     type: "pie",
     marker: {
       colors: ultimateColors,
@@ -90,30 +110,33 @@ Plotly.newPlot("pieChart", data, layout, config);
 
 // ------- HISTOGRAM PLOT
 
-var histData = []
+var histData = [];
 for (let i = 0; i < 8; ++i) {
   histData.push({
     x: parsed_all_dates[allLabels[i]],
     name: getShortBatName(allLabels[i]),
-    type: 'histogram',
-    marker: { color: barColors[i] }
+    type: "histogram",
+    marker: { color: barColors[i] },
   });
 }
 
-Plotly.newPlot('histogram', histData, { barmode: "stack", autosize: true, bargap: 0 });
+Plotly.newPlot("histogram", histData, {
+  barmode: "stack",
+  autosize: true,
+  bargap: 0,
+});
 
 // ----- TIMESERIES PLOT
 
-
 var data = [
   {
-    x: parsed_count_by_day.map(x => x._id.yearMonthDay),
-    y: parsed_count_by_day.map(x => x.count),
-    type: 'scatter'
-  }
+    x: parsed_count_by_day.map((x) => x._id.yearMonthDay),
+    y: parsed_count_by_day.map((x) => x.count),
+    type: "scatter",
+  },
 ];
 
-var timeseriesData = []
+var timeseriesData = [];
 for (let i = 0; i < 8; ++i) {
   timeseriesData.push({
     type: "scatter",
@@ -121,9 +144,9 @@ for (let i = 0; i < 8; ++i) {
     name: getShortBatName(allLabels[i]),
     x: parsed_count_by_day_by_species[allLabels[i]].dates,
     y: parsed_count_by_day_by_species[allLabels[i]].counts,
-    line: { 
+    line: {
       color: barColors[i],
-      width: 2
+      width: 2,
     },
   });
 }
@@ -132,14 +155,13 @@ for (let i = 0; i < 8; ++i) {
 timeseriesData.push({
   type: "scatter",
   mode: "lines",
-  name: 'Total',
-  x: parsed_count_by_day.map(x => x._id.yearMonthDay),
-  y: parsed_count_by_day.map(x => x.count),
+  name: "Total",
+  x: parsed_count_by_day.map((x) => x._id.yearMonthDay),
+  y: parsed_count_by_day.map((x) => x.count),
   line: {
     width: 1,
-  }
+  },
 });
-
 
 var layout = {
   xaxis: {
@@ -172,5 +194,30 @@ var layout = {
   },
 };
 
-
 Plotly.newPlot("timeSeriesChart", timeseriesData, layout, config);
+
+// ---------------overlay---------------------------------
+var speciesOverlay = new Map();
+speciesOverlay["Asellia tridens"] =
+  "<h4>The trident bat or trident leaf-nosed bat (Asellia tridens) is a species of bat in the family Hipposideridae. It is widely distributed in the Middle East, South and Central Asia, and North, East, and Central Africa. Its natural habitats are subtropical or tropical dry forests, dry savanna, subtropical or tropical dry shrubland, caves and hot deserts. </h4> <h1>Trident bat: </h1> <br>  <img src='.img/Asellia_tridens.png' alt='Asselia Tridens' width='500' height='400' style='border-radius: 50%;'> <br><br> <h5>Most recent Detection:  " +
+  new Date(most_recent_unique_detections[0].time).toLocaleString("en-US") +
+  "</h5>";
+speciesOverlay["Eptesicus bottae"] = "<h1> bottae ...</h1>";
+speciesOverlay["Myotis emarginatus"] = "<h1>Emarginatus... </h1>";
+speciesOverlay["Pipistrellus kuhli"] = "<h1>kuhli...</h1>";
+speciesOverlay["Rhinopoma muscatellum"] = "<h1>muscatellum...</h1>";
+speciesOverlay["Rhyneptesicus nasutus"] = "<h1>nasutus...</h1>";
+speciesOverlay["Rousettus aegyptius"] = "<h1> aegyptius...</h1>";
+speciesOverlay["Taphozous perforatus"] = "<h1>perforatus...</h1>";
+function on(species) {
+  document.getElementById("overlayText").innerHTML =
+    "<h1>" + species + "</h1>" + speciesOverlay[species];
+  document.getElementById("overlay").style.display = "block";
+  console.log(species);
+}
+
+function off() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+most_recent_unique_detections;

@@ -23,7 +23,13 @@
     var parsed_all_dates = <%- JSON.stringify(all_dates)%>;
     var parsed_count_by_day = <%- JSON.stringify(count_by_day)%>;
     var parsed_count_by_day_by_species = <%- JSON.stringify(count_by_day_by_species)%>;
-    var  unique_species_count= <%- JSON.stringify(unique_species_count)%>;
+    var unique_species_count= <%- JSON.stringify(unique_species_count)%>;
+   var most_recent_unique_detections = <%- JSON.stringify(most_recent_unique_detections)%>;
+   var counts = <%-JSON.stringify(total_counts) %>
+   console.log(counts);
+   
+ 
+
 </script>
 
 <body>
@@ -40,7 +46,9 @@
                     <!-- /.container-fluid -->
                 </div>
             </div>
-
+                <div id="overlay" onclick="off()">
+                <div id="overlayText"></div>
+            </div>
             <!-- main content -->
             <div>
                 <!-- row 1 -->
@@ -58,7 +66,7 @@
                                     <div class="icon">
                                         <i class="ion ion-search"></i>
                                     </div>
-
+                                     <a href="#" class="small-box-footer"></a>
 
                                     </a>
                                 </div>
@@ -91,7 +99,7 @@
                                     <div class="inner">
                                         <b><%=most_recent_detection.bat_species%></b><br>
                                         <span><%=most_recent_detection.time.toLocaleString("en-US")%></span>
-
+                                        
                                         <!-- date city and species  -->
                                         <p>Most Recent Detection</p>
                                     </div>
@@ -140,27 +148,27 @@
                                 <ul class="products-list product-list-in-card pl-2 pr-2 ">
                                     <!-- /.item -->
                                     <li class="item">
-                                        <div class="product-info">
+                                        <div class="product-info"  id='Asellia tridens' onclick="on(this.id)">
                                             <a href="javascript:void(0)" class="product-title">
                                                 Asselia Tridens
                                         </div>
                                     </li>
                                     <!-- /.item -->
                                     <li class="item">
-                                        <div class="product-info">
+                                        <div class="product-info"  id='Eptesicus bottae' onclick="on(this.id)">
                                             <a href="javascript:void(0)" class="product-title">
                                                 Eptesicus Bottae
                                         </div>
                                     </li>
                                     <!-- /.item -->
                                     <li class="item">
-                                        <div class="product-info">
+                                        <div class="product-info" id='Myotis emarginatus' onclick="on(this.id)">
                                             <a href="javascript:void(0)" class="product-title">
                                                 Myotis Emarginatus
                                         </div>
                                     </li>
                                     <!-- /.item -->
-                                    <li class="item">
+                                    <li class="item"  id='Pipistrellus kuhli' onclick="on(this.id)">
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">
                                                 Pipistrellus kuhli
@@ -168,28 +176,28 @@
                                     </li>
                                     <!-- /.item -->
                                     <li class="item">
-                                        <div class="product-info">
+                                        <div class="product-info" id='Rhinopoma muscatellum' onclick="on(this.id)">
                                             <a href="javascript:void(0)" class="product-title">
                                                 Rhinopoma muscatellum
                                         </div>
                                     </li>
                                     <!-- /.item -->
                                     <li class="item">
-                                        <div class="product-info">
+                                        <div class="product-info"  id='Rhyneptesicus nasutus' onclick="on(this.id)">
                                             <a href="javascript:void(0)" class="product-title">
                                                 Rhyneptesicus nasutus
                                         </div>
                                     </li>
                                     <!-- /.item -->
                                     <li class="item">
-                                        <div class="product-info">
+                                        <div class="product-info"  id='Rousettus aegyptius' onclick="on(this.id)">
                                             <a href="javascript:void(0)" class="product-title">
                                                 Rousettus aegyptius
                                         </div>
                                     </li>
                                     <!-- /.item -->
                                     <li class="item">
-                                        <div class="product-info">
+                                        <div class="product-info"  id='Taphozous perforatus' onclick="on(this.id)">
                                             <a href="javascript:void(0)" class="product-title">
                                                 Taphozous perforatus
                                         </div>

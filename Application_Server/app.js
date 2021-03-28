@@ -170,6 +170,15 @@ app.get("/dashboard", async function (req, res) {
     }
   }
 
+  const most_recent_unique_detections = await Promise.all(
+    unique_species_count.map(async (x) => {
+      detection = await Incident.find({ bat_species: x })
+        .sort({ timestamp: -1 })
+        .limit(1);
+      return detection[0];
+    })
+  );
+  console.log(Array.from(most_recent_unique_detections));
   res.render("dashboard", {
     pie_counts: pie_counts,
     total_counts: total_counts,
@@ -179,6 +188,7 @@ app.get("/dashboard", async function (req, res) {
     count_by_day: count_by_day,
     count_by_day_by_species: count_by_day_by_species,
     unique_species_count: unique_species_count,
+    most_recent_unique_detections: most_recent_unique_detections,
   });
 });
 

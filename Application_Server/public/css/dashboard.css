@@ -4,3 +4,63 @@
 .detectedSpeciesList {
   overflow: scroll;
 }
+
+#overlay {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  right: 0%;
+  bottom: 0%;
+  background-color: rgba(30, 29, 29, 0.918);
+  z-index: 5;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+}
+
+#overlayText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2vw;
+  color: white;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#overlay h1,
+h5 {
+  color: #cee0ad;
+}
+#overlay h4 {
+  color: #cee0ad;
+}
+
+@media only screen and (max-width: 600px) {
+  #overlay h1 {
+    font-size: 6vw;
+    line-height: 4;
+  }
+  #overlay h4 {
+    color: #ccf084;
+    font-size: 5vw;
+    line-height: 1;
+  }
+  #overlay h5 {
+    color: #cee0ad;
+    font-size: 4vw;
+    line-height: 1;
+  }
+  #overlay img {
+    width: 100%;
+    height: auto;
+  }
+
+  #overlay {
+    overflow-y: scroll;
+  }
+}
