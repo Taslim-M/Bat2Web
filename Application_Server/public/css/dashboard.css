@@ -24,6 +24,7 @@
 }
 
 #overlayText {
+  margin-top: auto;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -43,15 +44,17 @@
 #overlay h1,
 h5 {
   color: #cee0ad;
+  line-height: 1;
 }
 #overlay h4 {
   color: #cee0ad;
+  line-height: 1;
 }
 
 @media only screen and (max-width: 600px) {
   #overlay h1 {
     font-size: 6vw;
-    line-height: 4;
+    line-height: 1;
   }
   #overlay h4 {
     color: #ccf084;
