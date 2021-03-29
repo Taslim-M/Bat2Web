@@ -197,11 +197,20 @@ var layout = {
 Plotly.newPlot("timeSeriesChart", timeseriesData, layout, config);
 
 // ---------------overlay---------------------------------
+var speciesCode = new Map();
+speciesCode["Asellia tridens"] = 0;
+speciesCode["Eptesicus bottae"] = 1;
+speciesCode["Myotis emarginatus"] = 2;
+speciesCode["Pipistrellus kuhli"] = 3;
+speciesCode["Rhinopoma muscatellum"] = 4;
+speciesCode["Rhyneptesicus nasutus"] = 5;
+speciesCode["Rousettus aegyptius"] = 6;
+speciesCode["Taphozous perforatus"] = 7;
+
 var speciesOverlay = new Map();
 speciesOverlay["Asellia tridens"] =
-  "<h4>The trident bat or trident leaf-nosed bat (Asellia tridens) is a species of bat in the family Hipposideridae. It is widely distributed in the Middle East, South and Central Asia, and North, East, and Central Africa. Its natural habitats are subtropical or tropical dry forests, dry savanna, subtropical or tropical dry shrubland, caves and hot deserts. </h4> <h1>Trident bat: </h1> <br>  <img src='.img/Asellia_tridens.png' alt='Asselia Tridens' width='500' height='400' style='border-radius: 50%;'> <br><br> <h5>Most recent Detection:  " +
-  new Date(most_recent_unique_detections[0].time).toLocaleString("en-US") +
-  "</h5>";
+  "<h4>The trident bat or trident leaf-nosed bat (Asellia tridens) is a species of bat in the family Hipposideridae. It is widely distributed in the Middle East, South and Central Asia, and North, East, and Central Africa. Its natural habitats are subtropical or tropical dry forests, dry savanna, subtropical or tropical dry shrubland, caves and hot deserts. </h4> <h1>Trident bat: </h1> <br>  <img src='.img/Asellia_tridens.png' alt='Asselia Tridens' width='500' height='400' style='border-radius: 50%;'> <br><br> <h5>Most recent Detection:  ";
+
 speciesOverlay["Eptesicus bottae"] = "<h1> bottae ...</h1>";
 speciesOverlay["Myotis emarginatus"] = "<h1>Emarginatus... </h1>";
 speciesOverlay["Pipistrellus kuhli"] = "<h1>kuhli...</h1>";
@@ -210,8 +219,35 @@ speciesOverlay["Rhyneptesicus nasutus"] = "<h1>nasutus...</h1>";
 speciesOverlay["Rousettus aegyptius"] = "<h1> aegyptius...</h1>";
 speciesOverlay["Taphozous perforatus"] = "<h1>perforatus...</h1>";
 function on(species) {
-  document.getElementById("overlayText").innerHTML =
-    "<h1>" + species + "</h1>" + speciesOverlay[species];
+  $.ajax({
+    url: "http://api.positionstack.com/v1/reverse",
+    data: {
+      access_key: "948300fa94cd60f25f5cc0807602a571",
+      query:
+        most_recent_unique_detections[speciesCode[species]].latitude +
+        "," +
+        most_recent_unique_detections[speciesCode[species]].longitude,
+      output: "json",
+      limit: 1,
+    },
+  }).done(function (Data) {
+    document.getElementById("overlayText").innerHTML =
+      "<h1>" +
+      species +
+      "</h1>" +
+      speciesOverlay[species] +
+      new Date(
+        most_recent_unique_detections[speciesCode[species]].time
+      ).toLocaleString("en-US") +
+      "<br> Coordinates of Detection: [ " +
+      most_recent_unique_detections[speciesCode[species]].latitude +
+      " , " +
+      most_recent_unique_detections[speciesCode[species]].longitude +
+      "]<br> Region of Detection: " +
+      Data.data[0].region +
+      "</h5>";
+  });
+
   document.getElementById("overlay").style.display = "block";
   console.log(species);
 }

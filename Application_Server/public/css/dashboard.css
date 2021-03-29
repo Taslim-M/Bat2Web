@@ -20,6 +20,7 @@
   flex-direction: column;
   justify-content: center;
   min-height: 100%;
+  overflow-y: scroll;
 }
 
 #overlayText {
@@ -32,6 +33,13 @@
   -ms-transform: translate(-50%, -50%);
 }
 
+#overlay img {
+  display: block;
+  width: 50%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
 #overlay h1,
 h5 {
   color: #cee0ad;
@@ -54,10 +62,6 @@ h5 {
     color: #cee0ad;
     font-size: 4vw;
     line-height: 1;
-  }
-  #overlay img {
-    width: 100%;
-    height: auto;
   }
 
   #overlay {
