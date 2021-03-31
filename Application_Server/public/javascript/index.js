@@ -120,8 +120,8 @@ function showMarkers() {
 }
 
 function showMarkerLegend() {
-  legend.innerHTML = "<h5>Legend</h5>";
   legend.innerHTML = "";
+  legend.innerHTML = "<h5>Legend</h5>";
   for (const key in markerColorCode) {
     const color =
       markerColorCode[key] == "ltblue" ? "lightskyblue" : markerColorCode[key];
