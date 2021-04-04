@@ -227,9 +227,12 @@ speciesOverlay["Taphozous perforatus"] =
   "<h4>The Egyptian tomb bat (Taphozous perforatus) is a species of sac-winged bat in the family Emballonuridae. It is a medium- to large-sized microbat with a mass of approximately 30 g (1.1 oz). It is an aerial insectivore, foraging in open space. Based on individuals captured in Ethiopia, it is thought to feed predominantly on Lepidoptera, but is also known to feed on Isoptera, Coleoptera and Orthoptera. </h4><h1>Perforatus bat: </h1> <br>";
 function on(species) {
   if (speciesCode[species] == 6) {
-    $("#overlayText").css("padding-top", "50%");
+    $("#overlayText").css("top", "100%");
+  } else if (speciesCode[species] == 2 || speciesCode[species] == 4) {
+    $("#overlayText").css("top", "60%");
+    // $("#overlayText").css("padding-top", "auto");
   } else {
-    $("#overlayText").css("padding-top", "auto");
+    $("#overlayText").css("top", "50%");
   }
   $.ajax({
     url: "http://api.positionstack.com/v1/reverse",
