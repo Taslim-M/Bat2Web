@@ -12,6 +12,23 @@ $("#toggleMapTable").on("click", function () {
   }
 });
 
+//---- Form validation
+function validateForm() {
+  //Don't validate if open range
+ if ($("#from_date").val() == "" || $("#to_date").val() == "") return true;
+
+  fromDate = new Date($("#from_date").val());
+  toDate = new Date($("#to_date").val());
+
+  if (fromDate >= toDate){
+    alert("Invalid Range");
+    return false;
+  }
+  return true;
+}
+
+//----
+
 let map;
 var allMarkers = [];
 var heatmap;

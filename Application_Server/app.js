@@ -60,9 +60,11 @@ app.get("/filter", async function (req, res) {
     to_date.toDateString();
   res.render("index", { incidents: incidents, msg: msg });
 });
+
 app.get("/about-us", async function (req, res) {
   res.render("about-us");
 });
+
 app.get("/dashboard", async function (req, res) {
   // -------------- Dashboard Panels data
   let total_counts = await Incident.countDocuments({});
