@@ -14,7 +14,7 @@ To understand the project, you can view this video on YouTube: [VIDEO](https://y
 
 
 
-<img src="https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png" width="100" height="100">
+<img src="https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png" width="400">
 
 # Tech Stack (WebApp)
 
