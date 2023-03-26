@@ -8,11 +8,33 @@ The Following Sections will Summarize the various components. Please do not hesi
 
 This project was selected as one of the top 3 in our engineering capstone project competition and the top-10 finalists for the Dell undergraduate capstone project competition.
 
+To understand the project, you can view this video on YouTube: [VIDEO](https://youtu.be/9pw_I2N22yo)
+
 # Hardware Diagram
 
-![hardware](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png)
+![hardware](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png, width=150)
 
-To understand the project, you can view this video on YouTube: [VIDEO](https://youtu.be/9pw_I2N22yo)
+# Tech Stack (WebApp)
+
+![techstack](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/backend_stack.PNG, width=150)
+
+# Network Communication Flow
+
+![network](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/network.PNG, width=150)
+
+# CNN (AI) Model
+
+![cnn](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/AI%20Model.PNG, width=150)
+
+# Sample Images
+
+![sample1](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_mapview.PNG, width=150)
+
+![sample2](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_map_details.PNG, width=150)
+
+![sample3](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_dashboard.PNG, width=150)
+
+
 
 If you find our study useful, please consider citing: 
 ```
