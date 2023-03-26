@@ -12,29 +12,27 @@ To understand the project, you can view this video on YouTube: [VIDEO](https://y
 
 # Hardware Diagram
 
-
-
 <img src="https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png" width="800">
 
 # Tech Stack (WebApp)
 
-![techstack](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/backend_stack.PNG | width=150)
+![techstack](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/backend_stack.PNG)
 
 # Network Communication Flow
 
-![network](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/network.PNG | width=150)
+![network](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/network.PNG)
 
 # CNN (AI) Model
 
-![cnn](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/AI%20Model.PNG | width=150)
+![cnn](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/AI%20Model.PNG)
 
 # Sample Images
 
-![sample1](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_mapview.PNG | width=150)
+![sample1](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_mapview.PNG)
 
-![sample2](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_map_details.PNG | width=150)
+![sample2](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_map_details.PNG)
 
-![sample3](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_dashboard.PNG | width=150)
+![sample3](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_dashboard.PNG)
 
 
 
