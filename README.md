@@ -1,6 +1,16 @@
 # DeepLearningBatDetector
-This project has several components to it. Unfortunately, the ML development codes is not very organised.
-However, inside Application_Server/ you can find the associated codes for the client server part.
+This project has several components to it. Unfortunately, the ML development codes are not very organized.
+However, inside Application_Server/, you can find the associated codes for the client-server part.
+
+This is an end-to-end project for bat classification using IoT devices. More information about our project is in our papers (see the last section).
+
+The Following Sections will Summarize the various components. Please do not hesitate to contact me for further information.
+
+This project was selected as one of the top 3 in our engineering capstone project competition and the top-10 finalists for the Dell undergraduate capstone project competition.
+
+# Hardware Diagram
+
+![hardware](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png)
 
 To understand the project, you can view this video on YouTube: [VIDEO](https://youtu.be/9pw_I2N22yo)
 
