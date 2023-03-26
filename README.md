@@ -12,31 +12,31 @@ To understand the project, you can view this video on YouTube: [VIDEO](https://y
 
 # Hardware Diagram
 
-![hardware](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png, width=150)
+![hardware](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png | width=150)
 
 # Tech Stack (WebApp)
 
-![techstack](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/backend_stack.PNG, width=150)
+![techstack](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/backend_stack.PNG | width=150)
 
 # Network Communication Flow
 
-![network](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/network.PNG, width=150)
+![network](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/network.PNG | width=150)
 
 # CNN (AI) Model
 
-![cnn](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/AI%20Model.PNG, width=150)
+![cnn](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/AI%20Model.PNG | width=150)
 
 # Sample Images
 
-![sample1](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_mapview.PNG, width=150)
+![sample1](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_mapview.PNG | width=150)
 
-![sample2](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_map_details.PNG, width=150)
+![sample2](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_map_details.PNG | width=150)
 
-![sample3](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_dashboard.PNG, width=150)
+![sample3](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_dashboard.PNG | width=150)
 
 
 
-If you find our study useful, please consider citing: 
+# If you find our study useful, please consider citing: 
 ```
 @inproceedings{zualkernan2021aiot,
   title={An aiot system for bat species classification},
