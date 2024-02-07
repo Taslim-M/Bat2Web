@@ -1,39 +1,45 @@
-# DeepLearningBatDetector
-This project has several components to it. Unfortunately, the ML development codes are not very organized.
-However, inside Application_Server/, you can find the associated codes for the client-server part.
+# Classification and Behaviour Analysis of Bat Echolocation Calls using Supervised and Unsupervised Learning Algorithms
 
-This is an end-to-end project for bat classification using IoT devices. More information about our project is in our papers (see the last section).
-
-The Following Sections will Summarize the various components. Please do not hesitate to contact me for further information.
-
-This project was selected as one of the top 3 in our engineering capstone project competition and the top-10 finalists for the Dell undergraduate capstone project competition.
+Bats play a pivotal role in maintaining ecological balance, with their study offering vital insights into environmental health and aiding conservation efforts. The complexity of bat calls, however, presents a significant challenge, necessitating expert analysis and extensive time for accurate interpretation. Addressing this, our study introduces neural network applications for analyzing bat call behavior and implementing a classification system. We employ unsupervised learning to generate clusters of bat calls, which are then examined through a novel framework to identify and quantify behavioral characteristics. For species classification, we develop a compact CNN model, achieving a notable F1-score of 0.9578 and an accuracy of 97.5\%. Furthermore, we present an open-source, end-to-end system that leverages the LoRaWAN protocol to facilitate real-time monitoring of bat populations via a web-based platform, enhancing accessibility and engagement in bat conservation efforts.
 
 To understand the project, you can view this video on YouTube: [VIDEO](https://youtu.be/9pw_I2N22yo)
 
-# Hardware Diagram
+# System Diagram
 
-<img src="https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/overall_hardware.png" width="800">
+This system is characterized by the integration of edge devices, each outfitted with a microphone and an embedded computing unit for on-site deployment of a CNN model. Specifically, the system utilizes a high-fidelity 16-bit, 384 kHz analog-to-digital (A/D) Pettersson M500-384 USB Ultrasound microphone for audio signal acquisition.
+
+<img src="/images/overall_new.png" width="800">
 
 # Tech Stack (WebApp)
+
+We have elected to utilize the document-oriented MongoDB NoSQL database system for data management purposes. The interfacing with the database within the application server is facilitated through the use of the Mongoose library. This setup allows for efficient storage and retrieval of detection data, which is categorized according to three primary attributes: the geographic location of the detection (latitude and longitude coordinates); the timestamp of the detection (formatted according to the ISO 8601 standard); and the scientific name of the detected bat species. 
 
 ![techstack](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/backend_stack.PNG)
 
 # Network Communication Flow
 
+The LoRa Raspberry Pi Gateway serves as the middle-man during the communications, as it will receive the messages from the edge device over the LoRaWAN protocol, and forward them to The Things Network (TTN) broker. This gateway was configured to follow the relevant LoRa channel for our region (EU 863-870), and was registered in The Things Network web portal.
+
 ![network](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/network.PNG)
 
 # CNN (AI) Model
+We developed a supervised Convolutional Neural Network (CNN) model specifically tailored for classifying bat species in edge devices. This model utilizes the Mel-scaled Filter Bank (MSFB) representation of audio segments. Emphasizing the need for deployment on edge devices, the model was meticulously designed to be compact. The original CNN model was constructed using the TensorFlow framework, and its architecture is depicted in Figure below.
 
 ![cnn](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/AI%20Model.PNG)
 
-# Sample Images
+# Web Interface Images
+
+The development of the website's front-end was accomplished using a combination of JavaScript, HTML, CSS, and Bootstrap 4, ensuring a design that is both responsive and mobile-friendly, as depicted in Figure \ref{webapp_overall}. The backend features an ExpressJS based web server.
 
 ![sample1](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_mapview.PNG)
 
+The web platform's homepage is characterized by a map interface, facilitated through the Google Maps API, which displays markers for each detection event. These markers are accompanied by a color-coded legend to aid in the visualization of data.
+
 ![sample2](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_map_details.PNG)
 
-![sample3](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_dashboard.PNG)
+The Dashboard section of the web application is designed to present a comprehensive summary of the bat detections.
 
+![sample3](https://github.com/Taslim-M/ClassifyBatsAudio/blob/master/images/sample_dashboard.PNG)
 
 
 # If you find our study useful, please consider citing: 
