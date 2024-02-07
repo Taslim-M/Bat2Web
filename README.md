@@ -4,6 +4,21 @@ Bats play a pivotal role in maintaining ecological balance, with their study off
 
 To understand the project, you can view this video on YouTube: [VIDEO](https://youtu.be/9pw_I2N22yo)
 
+# Unsupervised Clustering
+The unsupervised learning framework in our study is centered around the concept of generating clusters, with each cluster representing a distinct bat behavior. In selecting algorithms for this framework, we considered several factors: scalability, the underlying network architecture, the algorithm's category, and the implementation of common strategies such as over-clustering and pretext tasks.
+
+Each clustering and pre-processing algorithm is hosted on its own GitHub, listed below:
+
+| Algorithm | GitHub |
+|----------|----------|
+| Scripts for Preprocessing and other utility functions   | [code](https://github.com/arbab-ml/preprocessing_bats_clusters) |
+| DeepCluster    | [code](https://github.com/arbab-ml/deepcluster) |
+| JULE    | [code](https://github.com/arbab-ml/joint-cluster-cnn) |
+| IMSAT    | [code](https://github.com/arbab-ml/Imsat-1) |
+| IIC    | [code](https://github.com/arbab-ml/IIC-1) |
+| SCAN    | [code](https://github.com/arbab-ml/SCAN-algorithm/tree/for_bats_dataset) |
+
+
 # System Diagram
 
 This system is characterized by the integration of edge devices, each outfitted with a microphone and an embedded computing unit for on-site deployment of a CNN model. Specifically, the system utilizes a high-fidelity 16-bit, 384 kHz analog-to-digital (A/D) Pettersson M500-384 USB Ultrasound microphone for audio signal acquisition.
