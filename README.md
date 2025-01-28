@@ -58,15 +58,18 @@ The alternate table view can provide raw details.
 
 # If you find our study useful, please consider citing: 
 ```
-@article{,
-  title={Bat2Web: A Framework for Real-time Classification of Bat Species Echolocation Signals Using Audio Sensor Data.},
-  author={},
-  journal={},
-  volume={},
-  number={},
-  pages={},
-  year={},
-  publisher={MDPI}
+@article{
+  AUTHOR = {Mahbub, Taslim and Bhagwagar, Azadan and Chand, Priyanka and Zualkernan, Imran and Judas, Jacky and Dghaym, Dana},
+  TITLE = {Bat2Web: A Framework for Real-Time Classification of Bat Species Echolocation Signals Using Audio Sensor Data},
+  JOURNAL = {Sensors},
+  VOLUME = {24},
+  YEAR = {2024},
+  NUMBER = {9},
+  ARTICLE-NUMBER = {2899},
+  URL = {https://www.mdpi.com/1424-8220/24/9/2899},
+  PubMedID = {38733008},
+  ISSN = {1424-8220},
+  DOI = {10.3390/s24092899}
 }
 ```
 
